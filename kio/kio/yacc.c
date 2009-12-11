@@ -13,10 +13,11 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.  */
+    You should have received a copy of the GNU Library General Public License
+    along with this library; see the file COPYING.LIB.  If not, write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA 02110-1301, USA.
+*/
 
 /* As a special exception, when this file is copied by Bison into a
    Bison output file, you may use that output file without restriction.
@@ -676,7 +677,7 @@ int yydebug;
 # define YYMAXDEPTH 10000
 #endif
 
-
+
 
 #if YYERROR_VERBOSE
 
@@ -731,7 +732,7 @@ yystpcpy (yydest, yysrc)
 
 #endif /* !YYERROR_VERBOSE */
 
-
+
 
 #if YYDEBUG
 /*--------------------------------.
@@ -800,7 +801,7 @@ yydestruct (yymsg, yytype, yyvaluep)
         break;
     }
 }
-
+
 
 /* Prevent warnings from -Wmissing-prototypes.  */
 
@@ -853,7 +854,7 @@ yyparse ()
 #endif
 #endif
 {
-  
+
   register int yystate;
   register int yyn;
   int yyresult;
@@ -1278,7 +1279,7 @@ yyreduce:
 
 /* Line 1037 of yacc.c.  */
 #line 1281 "yacc.tab.c"
-
+
   yyvsp -= yylen;
   yyssp -= yylen;
 
