@@ -46,7 +46,7 @@ libDCOP_la_SOURCES = dcopstub.cpp dcopref.cpp dcopobject.cpp dcopclient.cpp
 kdeinit_LTLIBRARIES = dcopserver.la
 dcopserver_la_LDFLAGS = -module -avoid-version $(all_libraries)
 dcopserver_la_SOURCES = dcopserver.cpp dcopsignals.cpp
-dcopserver_la_LIBADD  = libDCOP.la
+dcopserver_la_LIBADD  = libDCOP.la $(LIB_QT)
 
 dcopserver_shutdown_SOURCES = dcopserver_shutdown.c
 

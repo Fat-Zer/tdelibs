@@ -173,7 +173,7 @@ KPopupMenu* KHelpMenu::menu()
     
     if (kapp->authorizeKAction("help_about_kde"))
     {
-      mMenu->insertItem( SmallIcon("about_kde"), i18n( "About &KDE" ), menuAboutKDE );
+      mMenu->insertItem( SmallIcon("about_kde"), i18n( "About &Trinity" ), menuAboutKDE );
       mMenu->connectItem( menuAboutKDE, this, SLOT( aboutKDE() ) );
     }
   }

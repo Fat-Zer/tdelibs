@@ -97,6 +97,7 @@ KService::init( KDesktopFile *config )
   m_bValid = true;
 
   bool absPath = !QDir::isRelativePath(entryPath());
+  bool kde4application = config->fileName().startsWith("/usr/share/applications/kde4/");
 
   config->setDesktopGroup();
 
@@ -196,9 +197,28 @@ KService::init( KDesktopFile *config )
      name = name.left(pos);
 
   m_strExec = config->readPathEntry( "Exec" );
+  if (kde4application && !m_strExec.startsWith("/")) {
+    m_strExec = "KDEHOME=$HOME/.kde XDG_DATA_DIRS=/usr/share KDEDIRS=/usr/ XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
+  } else if (config->readBoolEntry("X-KDE-SubstituteUID")) {
+    int space = m_strExec.find(" ");
+    if (space==-1)
+      m_strExec = KStandardDirs::findExe(m_strExec);
+    else {
+      const QString command = m_strExec.left(space);
+      m_strExec.replace(command,KStandardDirs::findExe(command));
+    }
+  }
+
   entryMap.remove("Exec");
 
   m_strIcon = config->readEntry( "Icon", "unknown" );
+  if (kde4application) {
+    if (QFile::exists("/usr/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png")) {
+      m_strIcon = "/usr/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png";
+    } else if (QFile::exists("/usr/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png")) {
+      m_strIcon = "/usr/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png";
+    }
+  }
   entryMap.remove("Icon");
   m_bTerminal = (config->readBoolEntry( "Terminal" )); // should be a property IMHO
   entryMap.remove("Terminal");
@@ -209,6 +229,9 @@ KService::init( KDesktopFile *config )
   m_strComment = config->readEntry( "Comment" );
   entryMap.remove("Comment");
   m_strGenName = config->readEntry( "GenericName" );
+  if (kde4application) {
+    m_strGenName += " [KDE4]";
+  }
   entryMap.remove("GenericName");
   QString untranslatedGenericName = config->readEntryUntranslated( "GenericName" );
   if (!untranslatedGenericName.isEmpty())
@@ -226,7 +249,8 @@ KService::init( KDesktopFile *config )
   m_lstServiceTypes = config->readListEntry( "ServiceTypes" );
   entryMap.remove("ServiceTypes");
   // For compatibility with KDE 1.x
-  m_lstServiceTypes += config->readListEntry( "MimeType", ';' );
+  if (!kde4application)
+     m_lstServiceTypes += config->readListEntry( "MimeType", ';' );
   entryMap.remove("MimeType");
 
   if ( m_strType == "Application" && !m_lstServiceTypes.contains("Application") )
@@ -245,6 +269,8 @@ KService::init( KDesktopFile *config )
      m_DCOPServiceType = DCOP_None;
 
   m_strDesktopEntryName = name.lower();
+  if (kde4application)
+     m_strDesktopEntryName = "kde4-" + m_strDesktopEntryName;
 
   m_bAllowAsDefault = config->readBoolEntry( "AllowDefault", true );
   entryMap.remove("AllowDefault");
@@ -260,7 +286,10 @@ KService::init( KDesktopFile *config )
   for( ; it != entryMap.end();++it)
   {
      //qDebug("   Key = %s Data = %s", it.key().latin1(), it.data().latin1());
-     m_mapProps.insert( it.key(), QVariant( it.data()));
+      QString key = it.key();
+      if (kde4application && key=="OnlyShowIn" && it.data()=="KDE;")
+         key = "NotShowIn";
+      m_mapProps.insert( key, QVariant( it.data()));
   }
 }
 

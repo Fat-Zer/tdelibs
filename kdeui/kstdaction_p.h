@@ -111,7 +111,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ ReportBug,     KStdAccel::AccelNone, "help_report_bug", I18N_NOOP("&Report Bug..."), 0, 0 },
 	{ SwitchApplicationLanguage,     KStdAccel::AccelNone, "switch_application_language", I18N_NOOP("Switch application &language..."), 0, 0 },
 	{ AboutApp,      KStdAccel::AccelNone, "help_about_app", I18N_NOOP("&About %1"), 0, 0 },
-	{ AboutKDE,      KStdAccel::AccelNone, "help_about_kde", I18N_NOOP("About &KDE"), 0,"about_kde" },
+	{ AboutKDE,      KStdAccel::AccelNone, "help_about_kde", I18N_NOOP("About &Trinity"), 0,"about_kde" },
 	{ ActionNone, KStdAccel::AccelNone, 0, 0, 0, 0 }
 };
 

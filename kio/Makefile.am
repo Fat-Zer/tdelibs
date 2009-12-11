@@ -20,7 +20,8 @@ AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
 
 INCLUDES=  -I$(srcdir)/.. $(all_includes) $(SSL_INCLUDES)
 
-SUBDIRS = kssl kio bookmarks kfile . kpasswdserver misc pics tests kioexec httpfilter
+SUBDIRS = kssl kio bookmarks kfile . pics tests kioexec httpfilter
+DIST_SUBDIRS = kpasswdserver misc
 
 lib_LTLIBRARIES = libkio.la
 
@@ -32,7 +33,7 @@ libkio_la_LIBADD = kssl/libkssl.la kio/libkiocore.la \
 	kio/libksycoca.la bookmarks/libkbookmarks.la kfile/libkfile.la \
 	../kdeui/libkdeui.la ../kdesu/libkdesu.la \
 	../kwallet/client/libkwalletclient.la \
-	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS)
+	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 
 kde_mime_DATA = magic
 kde_servicetypes_DATA = application.desktop kurifilterplugin.desktop \

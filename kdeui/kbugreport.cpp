@@ -88,12 +88,13 @@ KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutDa
   QWidget * parent = plainPage();
   d->submitBugButton = 0;
 
-  if ( m_aboutData->bugAddress() == QString::fromLatin1("submit@bugs.kde.org") )
-  {
-    // This is a core KDE application -> redirect to the web form
+  //if ( m_aboutData->bugAddress() == QString::fromLatin1("submit@bugs.pearsoncomputing.net") )
+  //{
+  //  // This is a core KDE application -> redirect to the web form
+    // Always redirect to the Web form for Trinity
     d->submitBugButton = new QPushButton( parent );
     setButtonCancel( KStdGuiItem::close() );
-  }
+  //}
 
   QLabel * tmpLabel;
   QVBoxLayout * lay = new QVBoxLayout( parent, 0, spacingHint() );
@@ -250,7 +251,7 @@ KBugReport::KBugReport( QWidget * parentw, bool modal, const KAboutData *aboutDa
 
     lay->addSpacing(10);
     QString text = i18n("To submit a bug report, click on the button below.\n"
-                        "This will open a web browser window on http://bugs.kde.org where you will find a form to fill in.\n"
+                        "This will open a web browser window on http://bugs.pearsoncomputing.net where you will find a form to fill in.\n"
                         "The information displayed above will be transferred to that server.");
     QLabel * label = new QLabel( text, parent, "label");
     lay->addWidget( label );
@@ -274,13 +275,14 @@ KBugReport::~KBugReport()
 
 void KBugReport::updateURL()
 {
-    KURL url ( "http://bugs.kde.org/wizard.cgi" );
-    url.addQueryItem( "os", d->os );
-    url.addQueryItem( "compiler", KDE_COMPILER_VERSION );
-    url.addQueryItem( "kdeVersion", d->kde_version );
-    url.addQueryItem( "appVersion", m_strVersion );
-    url.addQueryItem( "package", d->appcombo->currentText() );
-    url.addQueryItem( "kbugreport", "1" );
+    KURL url ( "http://bugs.pearsoncomputing.net/enter_bug.cgi" );
+    url.addQueryItem( "product", "KDE 3.5" );
+    url.addQueryItem( "op_sys", d->os );
+    url.addQueryItem( "cf_kde_compiler", KDE_COMPILER_VERSION );
+    url.addQueryItem( "cf_kde_version", d->kde_version );
+    url.addQueryItem( "cf_kde_appversion", m_strVersion );
+    url.addQueryItem( "cf_kde_package", d->appcombo->currentText() );
+    url.addQueryItem( "cf_kde_kbugreport", "1" );
     d->url = url;
 }
 
@@ -408,7 +410,7 @@ void KBugReport::slotOk( void )
     {
         QString msg = i18n("Unable to send the bug report.\n"
                            "Please submit a bug report manually...\n"
-                           "See http://bugs.kde.org/ for instructions.");
+                           "See http://bugs.pearsoncomputing.net/ for instructions.");
         KMessageBox::error(this, msg + "\n\n" + d->lastError);
         return;
     }
@@ -476,7 +478,7 @@ bool KBugReport::sendBugReport()
 {
   QString recipient ( m_aboutData ?
     m_aboutData->bugAddress() :
-    QString::fromLatin1("submit@bugs.kde.org") );
+    QString::fromLatin1("submit@bugs.pearsoncomputing.net") );
 
   QString command;
   command = locate("exe", "ksendbugmail");

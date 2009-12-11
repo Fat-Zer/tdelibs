@@ -48,6 +48,14 @@ AutoStart::AutoStart( bool new_startup )
   m_startList = new AutoStartList;
   m_startList->setAutoDelete(true);
   KGlobal::dirs()->addResourceType("autostart", "share/autostart");
+  QString xdgdirs = getenv("XDG_CONFIG_DIRS");
+  if (xdgdirs.isEmpty())
+        xdgdirs = "/etc/xdg";
+
+  QStringList xdgdirslist = QStringList::split( ':', xdgdirs );
+  for ( QStringList::Iterator itr = xdgdirslist.begin(); itr != xdgdirslist.end(); ++itr ) {
+	KGlobal::dirs()->addResourceDir("autostart", (*itr) +"/autostart");
+  }
 }
 
 AutoStart::~AutoStart()
