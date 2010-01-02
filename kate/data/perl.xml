@@ -39,7 +39,7 @@
 
    Enhance tr/// and y/// support.
 -->
-<language name="Perl" version="1.20" kateversion="2.4" section="Scripts" extensions="*.pl;*.pm" mimetype="application/x-perl;text/x-perl" author="Anders Lund (anders@alweb.dk)" license="LGPL">
+<language name="Perl" version="1.23" kateversion="2.4" section="Scripts" extensions="*.pl;*.pm" mimetype="application/x-perl;text/x-perl" author="Anders Lund (anders@alweb.dk)" license="LGPL">
   <highlighting>
     <list name="keywords">
       <item> if </item>
@@ -114,6 +114,11 @@
       <item> not </item>
       <item> eq </item>
       <item> ne </item>
+      <item> lt </item>
+      <item> gt </item>
+      <item> le </item>
+      <item> ge </item>
+      <item> cmp </item>
     </list>
     <list name="functions">
       <item>abs</item>
@@ -363,7 +368,7 @@
         <RegExpr attribute="Normal Text" context="#stay" String="\w+[=]" />
 
         <RegExpr attribute="Operator" context="find_quoted" String="\bq(?=[qwx]?\s*[^\w\s])" />
-        <RegExpr attribute="Operator" context="find_subst" String="\bs(?=\s*[^\w\s])" />
+        <RegExpr attribute="Operator" context="find_subst" String="\bs(?=\s*[^\w\s\]})])" />
         <RegExpr attribute="Operator" context="tr" String="\b(?:tr|y)\s*(?=[^\w\s\]})])" />
 
         <RegExpr attribute="Operator" context="find_pattern" String="\b(?:m|qr)(?=\s*[^\w\s\]})])" />
@@ -547,8 +552,9 @@
         <IncludeRules context="regex_pattern_internal_ip" />
       </context>
       <context name="subst_slash_replace" attribute="String (interpolated)" lineEndContext="#stay" dynamic="true">
-        <IncludeRules context="ipstring_internal" />
         <RegExpr attribute="Operator" context="#pop#pop#pop" String="%1[cegimosx]*" dynamic="true" endRegion="Replacement" />
+        <IncludeRules context="ipstring_internal" />
+
       </context>
 
       <context name="subst_sq_pattern" attribute="Pattern" lineEndContext="#stay">

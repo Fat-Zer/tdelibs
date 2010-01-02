@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="CSS" version="2.00" kateversion="2.4" section="Markup" extensions="*.css" mimetype="text/css" author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL">
+
+<!--
+
+    Kate CSS syntax highlighting definition
+
+
+    Changelog:
+
+    - Version 2.02, by Rafał Miłecki:
+        - Added CSS 3 properties "border-*-image" and "border-*-radius".
+        - Added CSS values "clip", "ellipsis" and "ellipsis-word".
+        - Added CSS 3 properties "overflow-x", "overflow-y", "text-overflow", "box-shadow" and "outline-offset".
+        - Added CSS 3 color values: "rgba", "hsl" and "hsla".
+        - Added Gecko CSS properties: "-moz-border-*-colors".
+        - Added background size properties: "background-size" and prefixes: "-o-", "-webkit-" and "-khtml-".
+
+    - Version 2.01, by Mathieu Bonnet:
+        - Added CSS 3 property "border-radius".
+        - Added Gecko CSS properties "-moz-border-radius" and "-moz-box-flex".
+        - Added Gecko CSS value "-moz-box".
+        - Added Trident CSS functional notation "expression".
+        - Extended the id and class syntax specifications, as per CSS 2.1 grammar.
+
+-->
+
+<language name="CSS" version="2.02" kateversion="2.4" section="Markup" extensions="*.css" mimetype="text/css" author="Wilbert Berendsen (wilbert@kde.nl)" license="LGPL">
 
   <highlighting>
     <list name="properties">
@@ -130,13 +155,49 @@
       <item> z-index </item>
 
       <!-- CSS3 -->
+      <item> border-bottom-image </item>
+      <item> border-bottom-left-image </item>
+      <item> border-bottom-left-radius </item>
+      <item> border-bottom-right-image </item>
+      <item> border-bottom-right-radius </item>
+      <item> border-corner-image </item>
+      <item> border-image </item>
+      <item> border-left-image </item>
+      <item> border-radius </item>
+      <item> border-right-image </item>
+      <item> border-top-image </item>
+      <item> border-top-left-image </item>
+      <item> border-top-left-radius </item>
+      <item> border-top-right-image </item>
+      <item> border-top-right-radius </item>
+      <item> box-shadow </item>
       <item> box-sizing </item>
       <item> opacity </item>
+      <item> outline-offset </item>
+      <item> overflow-x </item>
+      <item> overflow-y </item>
+      <item> text-overflow </item>
       <item> text-shadow </item>
 
+      <!-- Gecko rendering engine CSS property extensions -->
+      <item> -moz-border-bottom-colors </item>
+      <item> -moz-border-left-colors </item>
+      <item> -moz-border-radius </item>
+      <item> -moz-border-right-colors </item>
+      <item> -moz-border-top-colors </item>
+      <item> -moz-box-flex </item>
+
+      <!-- Opera rendering engine CSS property extensions -->
+      <item> -o-background-size </item>
+      <item> -o-text-overflow </item>
+
       <!-- konq specific -->
+      <item> -khtml-background-size </item>
       <item> konq_bgpos_x </item>
       <item> konq_bgpos_y </item>
+
+      <!-- Webkit rendering engine CSS property extensions -->
+      <item> -webkit-background-size </item>
 
       <!-- font properties in @font-face -->
       <item> font-family </item>
@@ -285,11 +346,14 @@
       <item> both </item>
       <item> capitalize </item>
       <item> caption </item>
+      <item> clip </item>
       <item> close-quote </item>
       <item> collapse </item>
       <item> condensed </item>
       <item> crop </item>
       <item> cross </item>
+      <item> ellipsis </item>
+      <item> ellipsis-word </item>
       <item> embed </item>
       <item> expanded </item>
       <item> extra-condensed </item>
@@ -349,6 +413,10 @@
       <item> monospace </item>
       <item> border-box </item>
       <item> content-box </item>
+      
+      <!-- Gecko rendering engine CSS value extensions -->
+      <item> -moz-box </item>      
+      
     </list>
 
 
@@ -404,12 +472,19 @@
       <item> attr </item>
       <item> rect </item>
       <item> rgb </item>
+      <item> rgba </item>
+      <item> hsl </item>
+      <item> hsla </item>
       <item> counter </item>
       <item> counters </item>
 
       <!-- in @font-face -->
       <item> local </item>
       <item> format </item>
+      
+      <!-- Trident (a.k.a., MSHTML) rendering engine functional notation extensions -->
+      <item> expression </item>
+      
     </list>
 
     <list name="mediatypes">
@@ -472,8 +547,8 @@
         <DetectChar attribute="Property" context="RuleSet" char="{" beginRegion="ruleset" />
         <!--parse selectors-->
 	<DetectChar attribute="Selector Attr" context="SelAttr" char="[" />
-	<RegExpr attribute="Selector Id" context="#stay" String="#[A-Za-z0-9][\w\-]*" />
-	<RegExpr attribute="Selector Class" context="#stay" String="\.[A-Za-z0-9][\w\-]*" />
+	<RegExpr attribute="Selector Id" context="#stay" String="#([a-zA-Z0-9\-_]|[\x80-\xFF]|\\[0-9A-Fa-f]{1,6})*" />
+	<RegExpr attribute="Selector Class" context="#stay" String="\.([a-zA-Z0-9\-_]|[\x80-\xFF]|\\[0-9A-Fa-f]{1,6})*" />
 	<RegExpr attribute="Selector Pseudo" context="#stay" String=":lang\([\w_-]+\)" />
 	<DetectChar attribute="Selector Pseudo" context="SelPseudo" char=":" />
 	<IncludeRules context="FindStrings" />

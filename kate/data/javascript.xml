@@ -3,7 +3,7 @@
 <!-- Author: Anders Lund <anders@alweb.dk> //-->
 <!-- Minor changes: Joseph Wenninger <jowenn@kde.org> //-->
 <!-- Full JavaScript 1.0 support by Whitehawk Stormchaser //-->
-<language name="JavaScript" version="1.10" kateversion="2.3" section="Scripts" extensions="*.js" mimetype="text/x-javascript" author="Anders Lund (anders@alweb.dk), Joseph Wenninger (jowenn@kde.org), Whitehawk Stormchaser (zerokode@gmx.net)" license="">
+<language name="JavaScript" version="1.13" kateversion="2.3" section="Scripts" extensions="*.js" mimetype="text/x-javascript;application/x-javascript" author="Anders Lund (anders@alweb.dk), Joseph Wenninger (jowenn@kde.org), Whitehawk Stormchaser (zerokode@gmx.net)" license="">
   <highlighting>
     <list name="keywords">
         <item> if </item>
@@ -395,7 +395,7 @@
       <context attribute="Normal Text" lineEndContext="#stay" name="Normal">
 	<DetectSpaces/>
         <StringDetect attribute="Region Marker" context="region_marker" String="//BEGIN" beginRegion="Region1"/>
-        <RegExpr attribute="Region Marker" context="region_marker" String="//END" endRegion="Region1"/>
+        <StringDetect attribute="Region Marker" context="region_marker" String="//END" endRegion="Region1"/>
         <keyword attribute="Keyword" context="#stay" String="keywords" />
         <keyword attribute="Function" context="#stay" String="functions" />
         <keyword attribute="Objects" context="#stay" String="objects" />
@@ -419,11 +419,13 @@
       <context attribute="String" lineEndContext="#pop" name="String">
 	<DetectIdentifier/>
         <HlCStringChar attribute="String Char" context="#stay"/>
+        <LineContinue attribute="String" context="#stay"/>
         <DetectChar attribute="String" context="#pop" char="&quot;"/>
       </context>
       <context attribute="String Char" lineEndContext="#pop" name="String 1">
-	<DetectIdentifier/>
-        <DetectChar attribute="String" context="String" char="&quot;"/>
+        <DetectIdentifier/>
+        <HlCStringChar attribute="String Char" context="#stay"/>
+        <LineContinue attribute="String" context="#stay"/>
         <DetectChar attribute="String Char" context="#pop" char="'"/>
       </context>
 
