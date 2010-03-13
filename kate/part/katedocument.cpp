@@ -2409,6 +2409,10 @@ bool KateDocument::openFile(KIO::Job * job)
   if ( fileTypeFound > -1 )
     updateFileType( fileTypeFound );
 
+  // read dir config (if possible and wanted)
+  if (!m_reloading)
+	readDirConfig ();
+
   // do we have success ?
   bool success = m_buffer->openFile (m_file);
   //
@@ -2434,9 +2438,6 @@ bool KateDocument::openFile(KIO::Job * job)
     // update file type if we haven't allready done so.
     if ( fileTypeFound < 0 )
       updateFileType (KateFactory::self()->fileTypeManager()->fileType (this));
-
-    // read dir config (if possible and wanted)
-    readDirConfig ();
 
     // read vars
     readVariables();
