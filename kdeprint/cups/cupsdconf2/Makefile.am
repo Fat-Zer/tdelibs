@@ -30,6 +30,6 @@ cupsdconfdatadir   = $(kde_datadir)/kdeprint
 
 # Translations
 messages:
-	perl cupsdcomment.pl < cupsd.conf.template > cupsd.conf.template.cpp
+	perl cupsdcomment.pl < cupsd.conf.template > cupsd.conf.template.txt
 	$(XGETTEXT) *.cpp -o $(podir)/cupsdconf.pot
-	rm -f cupsd.conf.template.cpp
+	rm -f cupsd.conf.template.txt
