@@ -36,7 +36,7 @@ libkspell_la_SOURCES = dummy.cpp
 picsdir = $(kde_datadir)/kdeui/pics
 pics_DATA = aboutkde.png ktip-bulb.png ktip-background.png
 
-include_HEADERS = kprogress.h kcolordlg.h \
+include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		kcolordialog.h kselect.h \
 		kdatepik.h kdatepicker.h kdatetbl.h kfontdialog.h kpopupmenu.h \
 		kfontrequester.h ktabctl.h kstatusbar.h \
@@ -86,7 +86,7 @@ libkdeui_la_SOURCES = \
 		kactioncollection.cpp kactionclasses.cpp \
 		kurllabel.cpp kmenubar.cpp kinputdialog.cpp \
 		knuminput.cpp klineedit.cpp klistview.cpp kprogress.cpp \
-		kcolordialog.cpp kselect.cpp kdatepicker.cpp \
+		kprogressbox.cpp kcolordialog.cpp kselect.cpp kdatepicker.cpp \
 		kdatetbl.cpp kfontrequester.cpp kfontdialog.cpp ktabctl.cpp \
 		kstatusbar.cpp kmainwindow.cpp \
 		keditlistbox.cpp kscrollview.cpp \
