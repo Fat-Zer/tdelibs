@@ -385,7 +385,8 @@ void KMMainView::slotPrinterSelected(const QString& prname)
 	//{
 		int 	mask = (m_manager->hasManagement() ? m_manager->printerOperationMask() : 0);
 		bool	sp = !(p && p->isSpecial());
-		m_actions->action("printer_remove")->setEnabled(!sp || ((mask & KMManager::PrinterRemoval) && p && p->isLocal() && !p->isImplicit()));
+//		m_actions->action("printer_remove")->setEnabled(!sp || ((mask & KMManager::PrinterRemoval) && p && p->isLocal() && !p->isImplicit()));
+		m_actions->action("printer_remove")->setEnabled(!sp || ((mask & KMManager::PrinterRemoval) && p && !p->isImplicit()));
 		m_actions->action("printer_configure")->setEnabled(!sp || ((mask & KMManager::PrinterConfigure) && p && !p->isClass(true) /*&& p->isLocal()*/));
 		m_actions->action("printer_hard_default")->setEnabled((sp && (mask & KMManager::PrinterDefault) && p && !p->isClass(true) && !p->isHardDefault() && p->isLocal()));
 		m_actions->action("printer_soft_default")->setEnabled((p && !p->isSoftDefault()));
@@ -455,6 +456,8 @@ void KMMainView::slotRightButtonClicked(const QString& prname, const QPoint& p)
 		}
 		else
 		{
+			m_actions->action("printer_remove")->plug(m_pop);
+			m_pop->insertSeparator();
 			if (!printer->isClass(true))
 			{
 				m_actions->action("printer_configure")->plug(m_pop);
