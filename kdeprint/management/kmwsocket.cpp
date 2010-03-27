@@ -47,10 +47,10 @@ KMWSocket::KMWSocket(QWidget *parent, const char *name)
 
 	QLabel	*l1 = new QLabel(i18n("&Printer address:"),this);
 	QLabel	*l2 = new QLabel(i18n("P&ort:"),this);
-	l2->setText(QString("9100"));
 
 	m_printer = new QLineEdit(this);
 	m_port = new QLineEdit(this);
+	m_port->setText(QString("9100"));
 
 	l1->setBuddy(m_printer);
 	l2->setBuddy(m_port);
