@@ -766,7 +766,8 @@ bool codeXToSym( uchar codeX, uint modX, uint& sym )
 	event.state = modX;
 	event.keycode = codeX;
 
-	XLookupString( &event, 0, 0, &keySym, 0 );
+	char buffer[64];
+	XLookupString( &event, buffer, 63, &keySym, NULL );
 	sym = (uint) keySym;
 	return true;
 }
