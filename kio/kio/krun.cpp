@@ -853,10 +853,11 @@ pid_t KRun::runCommand( const QString& cmd, const QString &execName, const QStri
   proc->setUseShell(true);
   *proc << cmd;
   KService::Ptr service = KService::serviceByDesktopName( binaryName( execName, true ) );
-  QStringList args = KShell::splitArgs( cmd );
-  for (QStringList::ConstIterator it = args.begin(); it != args.end(); ++it)
-  if (!(*it).contains('='))
-    proc->setWorkingDirectory((*it).mid(0, (*it).findRev('/')));
+  QString bin = binaryName( cmd, false );
+  int pos = bin.findRev( '/' );
+  if (pos != -1) {
+    proc->setWorkingDirectory( bin.mid(0, pos) );
+  }
   return runCommandInternal( proc, service.data(), binaryName( execName, false ), execName, iconName, window, asn );
 }
 
