@@ -603,6 +603,14 @@ public slots:
    */
   void selectAll();
 
+  /**
+   * Broadcast a received keycode to all listening KDE applications
+   * The primary use for this feature is to connect hotkeys such as
+   * XF86Display to their respective KGlobalAccel functions while
+   * the screen is locked by kdesktop_lock.
+   */
+  void broadcastKeyCode(unsigned int keyCode);
+
 public:
   /**
    * Returns the DCOP name of the service launcher. This will be something like
@@ -1381,6 +1389,12 @@ signals:
    * Used to notify KIconLoader objects that they need to reload.
    */
   void updateIconLoaders();
+
+  /**
+   * @internal
+   * Used to send KGlobalAccel objects a new keypress from physical hotkeys.
+   */
+  void coreFakeKeyPress(unsigned int keyCode);
 
 private:
   void propagateSettings(SettingsCategory category);

@@ -89,6 +89,7 @@ KGlobalAccelPrivate::KGlobalAccelPrivate()
         all_accels->append( this );
 	m_sConfigGroup = "Global Shortcuts";
 	kapp->installX11EventFilter( this );
+	connect(kapp, SIGNAL(coreFakeKeyPress(unsigned int)), this, SLOT(fakeKeyPressed(unsigned int)));
 }
 
 KGlobalAccelPrivate::~KGlobalAccelPrivate()
@@ -267,6 +268,49 @@ void KGlobalAccelPrivate::x11MappingNotify()
 	calculateGrabMasks();
 	// Do new XGrabKey()s.
 	updateConnections();
+}
+
+void KGlobalAccelPrivate::fakeKeyPressed(unsigned int keyCode) {
+	CodeMod codemod;
+	codemod.code = keyCode;
+	codemod.mod = 0;
+
+	KKey key = (keyCode, 0);
+
+	kdDebug(125) << "fakeKeyPressed: seek " << key.toStringInternal()
+		<< QString( " keyCodeX: %1 keyCode: %2 keyModX: %3" )
+			.arg( codemod.code, 0, 16 ).arg( keyCode, 0, 16 ).arg( codemod.mod, 0, 16 ) << endl;
+
+	// Search for which accelerator activated this event:
+	if( !m_rgCodeModToAction.contains( codemod ) ) {
+#ifndef NDEBUG
+		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
+			KAccelAction* pAction = *it;
+			kdDebug(125) << "\tcode: " << QString::number(it.key().code, 16) << " mod: " << QString::number(it.key().mod, 16)
+				<< (pAction ? QString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : QString::null)
+				<< endl;
+		}
+#endif
+		return;
+	}
+        
+	KAccelAction* pAction = m_rgCodeModToAction[codemod];
+
+	if( !pAction ) {
+                static bool recursion_block = false;
+                if( !recursion_block ) {
+                        recursion_block = true;
+		        QPopupMenu* pMenu = createPopupMenu( 0, KKeySequence(key) );
+		        connect( pMenu, SIGNAL(activated(int)), this, SLOT(slotActivated(int)) );
+		        pMenu->exec( QPoint( 0, 0 ) );
+		        disconnect( pMenu, SIGNAL(activated(int)), this, SLOT(slotActivated(int)));
+		        delete pMenu;
+                        recursion_block = false;
+                }
+	} else if( !pAction->objSlotPtr() || !pAction->isEnabled() )
+		return;
+	else
+		activate( pAction, KKeySequence(key) );
 }
 
 bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )

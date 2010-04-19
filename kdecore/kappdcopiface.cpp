@@ -64,3 +64,7 @@ void KAppDCOPInterface::reparseConfiguration()
 	KGlobal::config()->reparseConfiguration();
 }
 
+void KAppDCOPInterface::sendFakeKey( unsigned int keyCode) {
+	m_KApplication->broadcastKeyCode(keyCode);
+}
+

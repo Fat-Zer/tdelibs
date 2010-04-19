@@ -64,6 +64,12 @@ k_dcop:
 	void reparseConfiguration();
 
 	void updateUserTimestamp( ulong time );
+	/**
+	Send a fake keypress to all KApplication instances
+	For internal use in connecting insecure function keys to
+	KDE applications while the X keyboard is locked.
+	**/
+	void sendFakeKey( unsigned int keyCode);
 
 private:
 	KApplication *m_KApplication;

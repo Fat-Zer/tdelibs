@@ -2603,6 +2603,11 @@ void KApplication::selectAll()
   invokeEditSlot( SLOT( selectAll() ) );
 }
 
+void KApplication::broadcastKeyCode(unsigned int keyCode)
+{
+  emit coreFakeKeyPress(keyCode);
+}
+
 QCString
 KApplication::launcher()
 {
