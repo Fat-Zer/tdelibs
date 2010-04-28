@@ -26,72 +26,72 @@
 
 ScreenInfo* KRandrSimpleAPI::read_screen_info (Display *display)
 {
-    return read_screen_info(display);
+    return internal_read_screen_info(display);
 }
 
 int KRandrSimpleAPI::set_screen_size (ScreenInfo *screen_info)
 {
-    return set_screen_size(screen_info);
+    return internal_set_screen_size(screen_info);
 }
 
 void KRandrSimpleAPI::output_auto (ScreenInfo *screen_info, OutputInfo *output_info)
 {
-    output_auto (screen_info, output_info);
+    internal_output_auto (screen_info, output_info);
 }
 
 void KRandrSimpleAPI::output_off(ScreenInfo *screen_info, OutputInfo *output)
 {
-    output_off(screen_info, output);
+    internal_output_off(screen_info, output);
 }
 
 CrtcInfo* KRandrSimpleAPI::auto_find_crtc (ScreenInfo *screen_info, OutputInfo *output_info)
 {
-    return auto_find_crtc (screen_info, output_info);
+    return internal_auto_find_crtc (screen_info, output_info);
 }
 
 XRRModeInfo *KRandrSimpleAPI::find_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id)
 {
-    return find_mode_by_xid (screen_info, mode_id);
+    return internal_find_mode_by_xid (screen_info, mode_id);
 }
 
 int KRandrSimpleAPI::mode_height (XRRModeInfo *mode_info, Rotation rotation)
 {
-    return mode_height (mode_info, rotation);
+    return internal_mode_height (mode_info, rotation);
 }
 
 int KRandrSimpleAPI::mode_width (XRRModeInfo *mode_info, Rotation rotation)
 {
-    return mode_width (mode_info, rotation);
+    return internal_mode_width (mode_info, rotation);
 }
 
 int KRandrSimpleAPI::get_width_by_output_id (ScreenInfo *screen_info, RROutput output_id)
 {
-    return get_width_by_output_id (screen_info, output_id);
+    return internal_get_width_by_output_id (screen_info, output_id);
 }
 
 int KRandrSimpleAPI::get_height_by_output_id (ScreenInfo *screen_info, RROutput output_id)
 {
-    return get_height_by_output_id (screen_info, output_id);
+    return internal_get_height_by_output_id (screen_info, output_id);
 }
 
 char *KRandrSimpleAPI::get_output_name (ScreenInfo *screen_info, RROutput id)
 {
-    return get_output_name (screen_info, id);
+    return internal_get_output_name (screen_info, id);
 }
 
 Status KRandrSimpleAPI::crtc_apply (CrtcInfo *crtc_info)
 {
-    return crtc_apply (crtc_info);
+    return internal_crtc_apply (crtc_info);
 }
 
 Status KRandrSimpleAPI::crtc_disable (CrtcInfo *crtc)
 {
-    return crtc_disable (crtc);
+    return internal_crtc_disable (crtc);
 }
 
 int KRandrSimpleAPI::main_low_apply (ScreenInfo *screen_info)
 {
-    return main_low_apply (screen_info);
+    return internal_main_low_apply (screen_info);
 }
 
 bool KRandrSimpleAPI::kRandrHasRandr(void)
