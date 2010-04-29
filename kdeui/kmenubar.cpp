@@ -328,7 +328,11 @@ void KMenuBar::selectionTimeout()
         KConfigGroup xineramaConfig(KGlobal::config(),"Xinerama");
         int screen = xineramaConfig.readNumEntry("MenubarScreen",
             QApplication::desktop()->screenNumber(QPoint(0,0)) );
-        QRect area = QApplication::desktop()->screenGeometry(screen);
+        QRect area;
+        if (kapp->desktop()->numScreens() < 2)
+            area = kapp->desktop()->geometry();
+        else
+            area = kapp->desktop()->screenGeometry(screen);
         int margin = 0;
 	move(area.left() - margin, area.top() - margin); 
         setFixedSize(area.width() + 2* margin , heightForWidth( area.width() + 2 * margin ) );
