@@ -24,6 +24,267 @@
 
 #include "libkrandr.h"
 
+QString KRandrSimpleAPI::getIccFileName(QString profileName, QString screenName, QString kde_confdir) {
+	KSimpleConfig *t_config;
+	KSimpleConfig *t_systemconfig;
+	int t_numberOfProfiles;
+	QStringList t_cfgProfiles;
+	QString retval;
+
+	if (profileName != NULL) {
+		t_config = new KSimpleConfig( QString::fromLatin1( "kiccconfigrc" ));
+	}
+	else {
+		t_systemconfig = new KSimpleConfig( kde_confdir + QString("/kicc/kiccconfigrc") );
+	}
+
+	if (profileName != NULL) {
+		t_config->setGroup(NULL);
+		if (t_config->readBoolEntry("EnableICC", false) == true) {
+			t_config->setGroup(profileName);
+			retval = t_config->readEntry(screenName);
+		}
+		else {
+			retval = "";
+		}
+	}
+	else {
+		t_systemconfig->setGroup(NULL);
+		if (t_systemconfig->readBoolEntry("EnableICC", false) == true) {
+			retval = t_systemconfig->readEntry("ICCFile");
+		}
+		else {
+			retval = "";
+		}
+	}
+
+	if (profileName != "") {
+		delete t_config;
+	}
+	else {
+		delete t_systemconfig;
+	}
+
+	return retval;
+}
+
+QString KRandrSimpleAPI::applyIccFile(QString screenName, QString fileName) {
+	int i;
+	int j;
+	Display *randr_display;
+	ScreenInfo *randr_screen_info;
+	XRROutputInfo *output_info;
+
+	int screenNumber = 0;
+
+	if (fileName != "") {
+		// FIXME
+		// This should use the RRSetCrtcGamma function when available
+		// That is the only way to get proper setting when two output are active at the same time
+		// (otherwise in clone mode only one screen is available)
+
+		// HACK
+		// For now, simply exit with no changes if screenName is not an active output
+
+		if (isValid() == true) {
+			screenNumber = -1;
+			randr_display = XOpenDisplay(NULL);
+			randr_screen_info = read_screen_info(randr_display);
+			j=0;
+			for (i = 0; i < randr_screen_info->n_output; i++) {
+				output_info = randr_screen_info->outputs[i]->info;
+				// Look for ON outputs...
+				if (!randr_screen_info->outputs[i]->cur_crtc) {
+					continue;
+				}
+				// ...that are connected
+				if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+					continue;
+				}
+				if (output_info->name == screenName) {
+					screenNumber = j;
+				}
+				j++;
+			}
+		}
+
+		if (screenNumber >= 0) {
+			// Apply ICC settings with XCalib
+			QString icc_command;
+			FILE *pipe_xcalib;
+			char xcalib_result[2048];
+			int i;
+			xcalib_result[0]=0;
+
+			icc_command = QString("xcalib %1").arg(fileName);
+			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
+			{
+				printf("Xcalib pipe error\n\r");
+			}
+			else {
+				fgets(xcalib_result, 2048, pipe_xcalib);
+				pclose(pipe_xcalib);
+				for (i=1;i<2048;i++) {
+					if (xcalib_result[i] == 0) {
+						xcalib_result[i-1]=0;
+						i=2048;
+					}
+				}
+				if (strlen(xcalib_result) > 2) {
+					return xcalib_result;
+				}
+			}
+		}
+	}
+	else {
+		// Reset ICC profile on this screen
+
+		// FIXME
+		// This should use the RRSetCrtcGamma function when available
+		// That is the only way to get proper setting when two output are active at the same time
+		// (otherwise in clone mode only one screen is available)
+
+		// HACK
+		// For now, simply exit with no changes if screenName is not an active output
+
+		if (isValid() == true) {
+			screenNumber = -1;
+			randr_display = XOpenDisplay(NULL);
+			randr_screen_info = read_screen_info(randr_display);
+			j=0;
+			for (i = 0; i < randr_screen_info->n_output; i++) {
+				output_info = randr_screen_info->outputs[i]->info;
+				// Look for ON outputs...
+				if (!randr_screen_info->outputs[i]->cur_crtc) {
+					continue;
+				}
+				// ...that are connected
+				if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+					continue;
+				}
+				if (output_info->name == screenName) {
+					screenNumber = j;
+				}
+				j++;
+			}
+		}
+
+		if (screenNumber >= 0) {
+			// Apply ICC settings with XCalib
+			QString icc_command;
+			FILE *pipe_xcalib;
+			char xcalib_result[2048];
+			int i;
+			xcalib_result[0]=0;
+
+			icc_command = QString("xcalib -c");
+			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
+			{
+				printf("Xcalib pipe error\n\r");
+			}
+			else {
+				fgets(xcalib_result, 2048, pipe_xcalib);
+				pclose(pipe_xcalib);
+				for (i=1;i<2048;i++) {
+					if (xcalib_result[i] == 0) {
+						xcalib_result[i-1]=0;
+						i=2048;
+					}
+				}
+				if (strlen(xcalib_result) > 2) {
+					return xcalib_result;
+				}
+			}
+		}
+	}
+	return "";
+}
+
+QString KRandrSimpleAPI::applyIccConfiguration(QString profileName, QString kde_confdir) {
+	int i;
+	Display *randr_display;
+	ScreenInfo *randr_screen_info;
+	XRROutputInfo *output_info;
+
+	int screenNumber = 0;
+	QString errorstr = "";
+
+	// Find all screens
+	if (isValid() == true) {
+		randr_display = XOpenDisplay(NULL);
+		randr_screen_info = read_screen_info(randr_display);
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			output_info = randr_screen_info->outputs[i]->info;
+			errorstr = applyIccFile(output_info->name, getIccFileName(profileName, output_info->name, kde_confdir));
+			if (errorstr != "") {
+				return errorstr;
+			}
+		}
+	}
+	else {
+		return applyIccFile(getIccFileName(profileName, "Default", kde_confdir), "Default");
+	}
+	return "";
+}
+
+QString KRandrSimpleAPI::applySystemWideIccConfiguration(QString kde_confdir) {
+	// Apply ICC settings with XCalib
+	QString icc_command;
+	FILE *pipe_xcalib;
+	char xcalib_result[2048];
+	int i;
+	xcalib_result[0]=0;
+
+	icc_command = QString("xcalib %1").arg(getIccFileName(NULL, "Default", kde_confdir));
+	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
+	{
+		printf("Xcalib pipe error\n\r");
+	}
+	else {
+		fgets(xcalib_result, 2048, pipe_xcalib);
+		pclose(pipe_xcalib);
+		for (i=1;i<2048;i++) {
+			if (xcalib_result[i] == 0) {
+				xcalib_result[i-1]=0;
+				i=2048;
+			}
+		}
+		if (strlen(xcalib_result) > 2) {
+			return xcalib_result;
+		}
+	}
+	return "";
+}
+
+QString KRandrSimpleAPI::clearIccConfiguration() {
+	// Clear ICC settings with XCalib
+	QString icc_command;
+	FILE *pipe_xcalib;
+	char xcalib_result[2048];
+	int i;
+	xcalib_result[0]=0;
+
+	icc_command = QString("xcalib -c");
+	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
+	{
+		printf("Xcalib pipe error\n\r");
+	}
+	else {
+		fgets(xcalib_result, 2048, pipe_xcalib);
+		pclose(pipe_xcalib);
+		for (i=1;i<2048;i++) {
+			if (xcalib_result[i] == 0) {
+				xcalib_result[i-1]=0;
+				i=2048;
+			}
+		}
+		if (strlen(xcalib_result) > 2) {
+			return xcalib_result;
+		}
+	}
+	return "";
+}
+
 ScreenInfo* KRandrSimpleAPI::read_screen_info (Display *display)
 {
     return internal_read_screen_info(display);

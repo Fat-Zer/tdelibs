@@ -29,6 +29,8 @@
 
 #ifdef __cplusplus
 
+#include <kconfig.h>
+#include <ksimpleconfig.h>
 #include <kdelibs_export.h>
 
 /**
@@ -46,6 +48,33 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
   private:
 
   public:
+    /**
+     * Retrieves the specificed ICC profile filename from the configuration database
+     */
+    QString getIccFileName(QString profileName, QString screenName, QString kde_confdir);
+
+    /**
+     * Applies the specificed ICC profile filename to the specified RandR output
+     * If RandR is not available, the specified file is applied to the current display
+     */
+    QString applyIccFile(QString screenName, QString fileName);
+
+    /**
+     * Applies all saved ICC profile settings to all RandR outputs
+     * If RandR is not available, the settings are applied to the current display
+     */
+    QString applyIccConfiguration(QString profileName, QString kde_confdir);
+
+    /**
+     * Applies saved system wide settings to the current display
+     */
+    QString applySystemWideIccConfiguration(QString kde_confdir);
+
+    /**
+     * Resets the current display
+     */
+    QString clearIccConfiguration(void);
+
     /**
      * Reads current screen information.
      */
