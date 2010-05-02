@@ -205,9 +205,12 @@ QString KRandrSimpleAPI::applyIccConfiguration(QString profileName, QString kde_
 	Display *randr_display;
 	ScreenInfo *randr_screen_info;
 	XRROutputInfo *output_info;
+	KSimpleConfig *t_config;
 
 	int screenNumber = 0;
 	QString errorstr = "";
+
+	t_config = new KSimpleConfig( QString::fromLatin1( "kiccconfigrc" ));
 
 	// Find all screens
 	if (isValid() == true) {
@@ -224,7 +227,22 @@ QString KRandrSimpleAPI::applyIccConfiguration(QString profileName, QString kde_
 	else {
 		return applyIccFile(getIccFileName(profileName, "Default", kde_confdir), "Default");
 	}
+
+	t_config->writeEntry("CurrentProfile", profileName);
+	t_config->sync();
+	delete t_config;
+
 	return "";
+}
+
+QString KRandrSimpleAPI::getCurrentProfile () {
+	QString profileName;
+	KSimpleConfig *t_config;
+
+	t_config = new KSimpleConfig( QString::fromLatin1( "kiccconfigrc" ));
+	profileName = t_config->readEntry("CurrentProfile");
+	delete t_config;
+	return profileName;
 }
 
 QString KRandrSimpleAPI::applySystemWideIccConfiguration(QString kde_confdir) {

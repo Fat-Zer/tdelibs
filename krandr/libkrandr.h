@@ -76,6 +76,11 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     QString clearIccConfiguration(void);
 
     /**
+     * Retrieves current profile name
+     */
+    QString getCurrentProfile(void);
+
+    /**
      * Reads current screen information.
      */
     ScreenInfo* read_screen_info(Display *display);
