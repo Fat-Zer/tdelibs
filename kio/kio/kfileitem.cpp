@@ -191,6 +191,8 @@ void KFileItem::readUDSEntry( bool _urlIsDirectory )
   // extract the mode and the filename from the KIO::UDS Entry
   bool UDS_URL_seen = false;
 
+  if (&m_entry == NULL) return;
+
   KIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it ) {
     switch ((*it).m_uds) {
@@ -295,6 +297,8 @@ void KFileItem::setName( const QString& name )
 
 QString KFileItem::linkDest() const
 {
+  if (&m_entry == NULL) return QString::null;
+
   // Extract it from the KIO::UDSEntry
   KIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it )
@@ -322,6 +326,8 @@ QString KFileItem::localPath() const
   }
   else
   {
+    if (&m_entry == NULL) return QString::null;
+
     // Extract the local path from the KIO::UDSEntry
     KIO::UDSEntry::ConstIterator it = m_entry.begin();
     const KIO::UDSEntry::ConstIterator end = m_entry.end();
@@ -338,6 +344,8 @@ KIO::filesize_t KFileItem::size(bool &exists) const
   exists = true;
   if ( m_size != (KIO::filesize_t) -1 )
     return m_size;
+
+  if (&m_entry == NULL) return 0L;
 
   // Extract it from the KIO::UDSEntry
   KIO::UDSEntry::ConstIterator it = m_entry.begin();
@@ -359,6 +367,7 @@ KIO::filesize_t KFileItem::size(bool &exists) const
 
 bool KFileItem::hasExtendedACL() const
 {
+  if (&m_entry == NULL) return false;
   KIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); it++ )
     if ( (*it).m_uds == KIO::UDS_EXTENDED_ACL ) {
@@ -370,6 +379,8 @@ bool KFileItem::hasExtendedACL() const
 KACL KFileItem::ACL() const
 {
   if ( hasExtendedACL() ) {
+    if (&m_entry == NULL) return KACL( m_permissions );
+
     // Extract it from the KIO::UDSEntry
     KIO::UDSEntry::ConstIterator it = m_entry.begin();
     for( ; it != m_entry.end(); ++it )
@@ -382,6 +393,8 @@ KACL KFileItem::ACL() const
 
 KACL KFileItem::defaultACL() const
 {
+  if (&m_entry == NULL) return KACL();
+
   // Extract it from the KIO::UDSEntry
   KIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it )
@@ -420,6 +433,8 @@ time_t KFileItem::time( unsigned int which, bool &hasTime ) const
 
   if ( m_time[mappedWhich] != (time_t) -1 )
     return m_time[mappedWhich];
+
+  if (&m_entry == NULL) return static_cast<time_t>(0);
 
   // Extract it from the KIO::UDSEntry
   KIO::UDSEntry::ConstIterator it = m_entry.begin();

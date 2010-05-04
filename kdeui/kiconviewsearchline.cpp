@@ -41,6 +41,7 @@ public:
     iconView( 0 ),
     caseSensitive( DEFAULT_CASESENSITIVE ),
     activeSearch( false ),
+    hiddenItemsLockout( false ),
     queuedSearches( 0 ) {}
 
   QIconView *iconView;
@@ -48,6 +49,7 @@ public:
   bool activeSearch;
   QString search;
   int queuedSearches;
+  bool hiddenItemsLockout;
   QIconViewItemList hiddenItems;
 };
 
@@ -97,8 +99,6 @@ void KIconViewSearchLine::updateSearch( const QString &s )
 
   QString search = d->search = s.isNull() ? text() : s;
 
-  QIconViewItemList *hi = &(d->hiddenItems);
-
   QIconViewItem *currentItem = iv->currentItem();
 
   QIconViewItem *item = NULL;
@@ -119,14 +119,16 @@ void KIconViewSearchLine::updateSearch( const QString &s )
     }
 
     // Add Matching items, remove from hidden list
-    QIconViewItemList::iterator it = hi->begin();
-    while ( it != hi->end() )
+    d->hiddenItemsLockout = true;
+    QIconViewItemList::iterator it = d->hiddenItems.begin();
+    while ( it != d->hiddenItems.end() )
       {
 	item = *it;
 	++it;
 	if ( itemMatches( item, search ) )
 	  showItem( item );
       }
+    d->hiddenItemsLockout = false;
 
     iv->sort();
 
@@ -138,6 +140,7 @@ void KIconViewSearchLine::clear()
 {
   // Clear hidden list, give items back to QIconView, if it still exists
   QIconViewItem *item = NULL;
+  d->hiddenItemsLockout = true;
   QIconViewItemList::iterator it = d->hiddenItems.begin();
   while ( it != d->hiddenItems.end() )
     {
@@ -155,6 +158,8 @@ void KIconViewSearchLine::clear()
     kdDebug() << __FILE__ << ":" << __LINE__ <<
       "hiddenItems is not empty as it should be. " <<
       d->hiddenItems.count() << " items are still there.\n" << endl;
+
+  d->hiddenItemsLockout= false;
 
   d->search = "";
   d->queuedSearches = 0;
@@ -196,7 +201,8 @@ bool KIconViewSearchLine::itemMatches( const QIconViewItem *item,
   if ( item == NULL )
     return false;
 
-  return ( item->text().find( s, 0, caseSensitive() ) >= 0 );
+  QString itemtext = item->text();
+  return ( itemtext.find( s, 0, caseSensitive() ) >= 0 );
 }
 
 void KIconViewSearchLine::init( QIconView *iconView )
@@ -238,7 +244,9 @@ void KIconViewSearchLine::showItem( QIconViewItem *item )
       return;
     }
   d->iconView->insertItem( item );
-  d->hiddenItems.remove( item );
+  if (d->hiddenItemsLockout == false) {
+      d->hiddenItems.remove( item );
+  }
 }
 
 /******************************************************************************
