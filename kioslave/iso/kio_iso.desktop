@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Exec=konqueror iso:%f
+Icon=cd
+Terminal=false
+MimeType=application/x-iso;
+InitialPreference=10
+NoDisplay=true
+Name=ISO9660 Image Viewer
+Name[hu]=ISO9660 Nézet
+Name[fr]=Lecteur ISO9660
+X-DCOP-ServiceType=None
+Categories=Qt;KDE;System;
