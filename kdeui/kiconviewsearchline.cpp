@@ -269,6 +269,7 @@ void KIconViewSearchLine::showItem( QIconViewItem *item )
   d->hiddenListChanged++;
   d->iconView->insertItem( item );
   d->hiddenItems.remove( item );
+  item->setText(item->text());
 }
 
 /******************************************************************************
