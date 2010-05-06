@@ -106,6 +106,11 @@ public slots:
    */
   void clear();
 
+  /**
+   * Must be called before updateSearch() whenever an icon is deleted.
+   */
+  void iconDeleted(const QString &filename);
+
 
 protected:
   /**

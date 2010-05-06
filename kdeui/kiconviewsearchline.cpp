@@ -1,4 +1,5 @@
 /* This file is part of the KDE libraries
+   Copyright (c) 2010 Timothy Pearson <kb9vqf@pearsoncomputing.net>
    Copyright (c) 2004 Gustavo Sverzut Barbieri <gsbarbieri@users.sourceforge.net>
 
    This library is free software; you can redistribute it and/or
@@ -41,7 +42,7 @@ public:
     iconView( 0 ),
     caseSensitive( DEFAULT_CASESENSITIVE ),
     activeSearch( false ),
-    hiddenItemsLockout( false ),
+    hiddenListChanged( 0 ),
     queuedSearches( 0 ) {}
 
   QIconView *iconView;
@@ -49,7 +50,7 @@ public:
   bool activeSearch;
   QString search;
   int queuedSearches;
-  bool hiddenItemsLockout;
+  int hiddenListChanged;
   QIconViewItemList hiddenItems;
 };
 
@@ -93,54 +94,57 @@ QIconView *KIconViewSearchLine::iconView() const
  *****************************************************************************/
 void KIconViewSearchLine::updateSearch( const QString &s )
 {
-  QIconView *iv = d->iconView;
-  if( ! iv )
-    return; // disabled
+	long original_count;
+	int original_hiddenListChanged;
 
-  QString search = d->search = s.isNull() ? text() : s;
+	if( ! d->iconView )
+		return; // disabled
 
-  QIconViewItem *currentItem = iv->currentItem();
+	QString search = d->search = s.isNull() ? text() : s;
+	QIconViewItem *currentItem = d->iconView->currentItem();
 
-  QIconViewItem *item = NULL;
+	QIconViewItem *item = NULL;
 
-  // Remove Non-Matching items, add them them to hidden list
-  QIconViewItem *i = iv->firstItem();
-  while ( i != NULL )
-    {
-      item = i;
-      i = i->nextItem(); // Point to next, otherwise will loose it.
-      if ( ! itemMatches( item, search ) )
-	{
-	  hideItem( item );
+	// Remove Non-Matching items, add them them to hidden list
+	QIconViewItem *i = d->iconView->firstItem();
+	while ( i != NULL ) {
+		item = i;
+		i = i->nextItem(); // Point to next, otherwise will loose it.
+		if ( ! itemMatches( item, search ) ) {
+			hideItem( item );
 
-	  if ( item == currentItem )
-	    currentItem = NULL; // It's not in iconView anymore.
+			if ( item == currentItem )
+				currentItem = NULL; // It's not in iconView anymore.
+		}
 	}
-    }
 
-    // Add Matching items, remove from hidden list
-    d->hiddenItemsLockout = true;
-    QIconViewItemList::iterator it = d->hiddenItems.begin();
-    while ( it != d->hiddenItems.end() )
-      {
-	item = *it;
-	++it;
-	if ( itemMatches( item, search ) )
-	  showItem( item );
-      }
-    d->hiddenItemsLockout = false;
+	// Add Matching items, remove from hidden list
+	original_count = d->hiddenItems.count();
+	original_hiddenListChanged = d->hiddenListChanged;
+	for (QIconViewItemList::iterator it=d->hiddenItems.begin();it!=d->hiddenItems.end();++it) {
+		item = *it;
+		if ((original_count != d->hiddenItems.count()) || (original_hiddenListChanged != d->hiddenListChanged)) {
+			// The list has changed; pointers are now most likely invalid
+			// ABORT, but restart the search at the beginning
+			original_count = d->hiddenItems.count();
+			original_hiddenListChanged = d->hiddenListChanged;
+			it=d->hiddenItems.begin();
+		}
+		else {
+			if ( itemMatches( item, search ) )
+				showItem( item );
+		}
+	}
+	d->iconView->sort();
 
-    iv->sort();
-
-    if ( currentItem != NULL )
-      iv->ensureItemVisible( currentItem );
+	if ( currentItem != NULL )
+	d->iconView->ensureItemVisible( currentItem );
 }
 
 void KIconViewSearchLine::clear()
 {
   // Clear hidden list, give items back to QIconView, if it still exists
   QIconViewItem *item = NULL;
-  d->hiddenItemsLockout = true;
   QIconViewItemList::iterator it = d->hiddenItems.begin();
   while ( it != d->hiddenItems.end() )
     {
@@ -159,11 +163,29 @@ void KIconViewSearchLine::clear()
       "hiddenItems is not empty as it should be. " <<
       d->hiddenItems.count() << " items are still there.\n" << endl;
 
-  d->hiddenItemsLockout= false;
-
   d->search = "";
   d->queuedSearches = 0;
   KLineEdit::clear();
+}
+
+void KIconViewSearchLine::iconDeleted(const QString &filename) {
+	// Clear hidden list, give items back to QIconView, if it still exists
+	QIconViewItem *item = NULL;
+	QIconViewItemList::iterator it = d->hiddenItems.begin();
+	while ( it != d->hiddenItems.end() )
+	{
+		item = *it;
+		++it;
+		if ( item != NULL )
+		{
+			if (item->text() == filename) {
+				if (d->iconView != NULL)
+					showItem( item );
+				else
+					delete item;
+			}
+		}
+	}
 }
 
 void KIconViewSearchLine::setCaseSensitive( bool cs )
@@ -230,6 +252,7 @@ void KIconViewSearchLine::hideItem( QIconViewItem *item )
   if ( ( item == NULL ) || ( d->iconView == NULL ) )
     return;
 
+  d->hiddenListChanged++;
   d->hiddenItems.append( item );
   d->iconView->takeItem( item );
 }
@@ -243,10 +266,9 @@ void KIconViewSearchLine::showItem( QIconViewItem *item )
 	endl;
       return;
     }
+  d->hiddenListChanged++;
   d->iconView->insertItem( item );
-  if (d->hiddenItemsLockout == false) {
-      d->hiddenItems.remove( item );
-  }
+  d->hiddenItems.remove( item );
 }
 
 /******************************************************************************
@@ -264,10 +286,13 @@ void KIconViewSearchLine::activateSearch()
   d->queuedSearches--;
 
   if ( d->queuedSearches <= 0 )
-    {
+  {
       updateSearch( d->search );
       d->queuedSearches = 0;
-    }
+  }
+  else {
+      QTimer::singleShot( 200, this, SLOT( activateSearch() ) );
+  }
 }
 
 /******************************************************************************
