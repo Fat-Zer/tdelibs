@@ -1,5 +1,24 @@
+//krazy:excludeall=license (program, not a library)
 /*
 **  cert_extract.c -- Extract CA Certs out of Netscape certN.db files
+**
+**  Copyright      Ariel Glenn <ariel@columbia.edu>
+**  Copyright 1998 Ralf S. Engelschall <rse@engelschall.com>
+**
+**  This program is free software; you can redistribute it and/or modify
+**  it under the terms of the GNU General Public License as published by
+**  the Free Software Foundation; either version 2 of the License, or
+**  (at your option) any later version.
+**
+**  This program is distributed in the hope that it will be useful,
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**  GNU General Public License for more details.
+**
+**  You should have received a copy of the GNU General Public License
+**  along with this program; if not, write to the Free Software
+**  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
 **
 **  Originally written and released under the GPL by 
 **  Ariel Glenn from the AcIS R&D group at Columbia
@@ -96,7 +115,7 @@ int main(int argc, char **argv)
     dbname = argv[1];
     offset = findoffset(dbname);
     if (offset == 0) {
-        fprintf(stderr, "Couldn't determine cert offset in DB file '%s'\n", dbname);
+        fprintf(stderr, "Could not determine cert offset in DB file '%s'\n", dbname);
         exit(1);
     }
     else {
@@ -137,7 +156,7 @@ int main(int argc, char **argv)
                 j++;
                 sprintf(oname, "cert.%02d.der", j);
                 if ((fout = open(oname, O_WRONLY | O_CREAT | O_TRUNC, 0755)) == -1) {
-                    fprintf(stderr, "couldn't open %s\n", oname);
+                    fprintf(stderr, "could not open %s\n", oname);
                     continue;
                 }
                 write(fout, (char *) dvalue.data + offset - 1, plen);
