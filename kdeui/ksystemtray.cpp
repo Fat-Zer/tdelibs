@@ -29,9 +29,9 @@
 #include "kaboutdata.h"
 
 #ifdef Q_WS_X11
-#include <kwin.h> 
-#include <kwinmodule.h> 
-#include <qxembed.h> 
+#include <kwin.h>
+#include <kwinmodule.h>
+#include <qxembed.h>
 #endif
 
 #include <kiconloader.h>
@@ -62,7 +62,7 @@ KSystemTray::KSystemTray( QWidget* parent, const char* name )
 #ifdef Q_WS_X11
     QXEmbed::initialize();
 #endif
-    
+
     d = new KSystemTrayPrivate;
     d->actionCollection = new KActionCollection(this);
 
@@ -95,6 +95,9 @@ KSystemTray::KSystemTray( QWidget* parent, const char* name )
     }
     setCaption( KGlobal::instance()->aboutData()->programName());
     setAlignment( alignment() | Qt::AlignVCenter | Qt::AlignHCenter );
+
+    // Handle the possibility that the requested system tray size is something other than 22x22 pixels, per the Free Desktop specifications
+    setScaledContents(true);
 }
 
 KSystemTray::~KSystemTray()
@@ -306,12 +309,17 @@ KActionCollection* KSystemTray::actionCollection()
 {
     return d->actionCollection;
 }
-    
+
 QPixmap KSystemTray::loadIcon( const QString &icon, KInstance *instance )
 {
     KConfig *appCfg = kapp->config();
     KConfigGroupSaver configSaver(appCfg, "System Tray");
     int iconWidth = appCfg->readNumEntry("systrayIconWidth", 22);
+    return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
+}
+
+QPixmap KSystemTray::loadSizedIcon( const QString &icon, int iconWidth, KInstance *instance )
+{
     return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
 }
 

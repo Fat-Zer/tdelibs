@@ -108,7 +108,7 @@ public:
      * configuration dialog). The default value is KAboutData::programName().
      */
     virtual void setCaption( const QString& title );
-    
+
     /**
      * Loads an icon @p icon using the icon loader class of the given instance @p instance.
      * The icon is applied the panel effect as it should only be used to be shown in the
@@ -118,6 +118,17 @@ public:
      * @since 3.2
      */
     static QPixmap loadIcon( const QString &icon, KInstance *instance=KGlobal::instance() );
+
+    /**
+     * Loads an icon @p icon using the icon loader class of the given instance @p instance.
+     * The icon is applied the panel effect as it should only be used to be shown in the
+     * system tray.
+     * It's commonly used in the form : systray->setPixmap( systray->loadIcon( "mysystray", iconWidth ) );
+     * This is essentially the same as loadIcon(), but with a forced icon size
+     *
+     * @since 3.5.12
+     */
+    static QPixmap loadSizedIcon( const QString &icon, int iconWidth, KInstance *instance=KGlobal::instance() );
 
 signals:
     /**
