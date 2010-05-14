@@ -1,1 +1,1 @@
-SUBDIRS = file dir ldapkio
+SUBDIRS = file dir net ldapkio

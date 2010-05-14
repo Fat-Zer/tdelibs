@@ -57,7 +57,7 @@ ResourceNet::ResourceNet( const KConfig *config )
   if ( config ) {
     init( KURL( config->readPathEntry( "NetUrl" ) ), config->readEntry( "NetFormat" ) );
   } else {
-    init( KURL(), "vcard" );
+    init( KURL(), QString("vcard").latin1() );
   }
 }
 
@@ -81,7 +81,7 @@ void ResourceNet::init( const KURL &url, const QString &format )
   FormatFactory *factory = FormatFactory::self();
   mFormat = factory->format( mFormatName );
   if ( !mFormat ) {
-    mFormatName = "vcard";
+    mFormatName = QString("vcard").latin1();
     mFormat = factory->format( mFormatName );
   }
 
@@ -136,7 +136,7 @@ void ResourceNet::doClose()
 bool ResourceNet::load()
 {
   QString tempFile;
-    
+
   if ( !KIO::NetAccess::download( mUrl, tempFile, 0 ) ) {
     addressBook()->error( i18n( "Unable to download file '%1'." ).arg( mUrl.prettyURL() ) );
     return false;
@@ -154,7 +154,7 @@ bool ResourceNet::load()
       addressBook()->error( i18n( "Problems during parsing file '%1'." ).arg( tempFile ) );
 
   KIO::NetAccess::removeTempFile( tempFile );
-  
+
   return result;
 }
 
@@ -174,9 +174,10 @@ bool ResourceNet::asyncLoad()
     kdWarning(5700) << "Aborted asyncLoad() because we're still asyncSave()ing!" << endl;
     return false;
   }
-  
+
   bool ok = createLocalTempFile();
   if ( ok )
+    mTempFile->sync();
     ok = mTempFile->close();
 
   if ( !ok ) {
@@ -184,7 +185,7 @@ bool ResourceNet::asyncLoad()
     deleteLocalTempFile();
     return false;
   }
-  
+
   KURL dest;
   dest.setPath( mTempFile->name() );
 
@@ -218,7 +219,7 @@ void ResourceNet::abortAsyncSaving()
     d->mSaveJob->kill(); // result not emitted
     d->mSaveJob = 0;
   }
-  
+
   deleteLocalTempFile();
   d->mIsSaving = false;
 }
@@ -234,12 +235,13 @@ bool ResourceNet::save( Ticket* )
   KTempFile tempFile;
   tempFile.setAutoDelete( true );
   bool ok = false;
-  
+
   if ( tempFile.status() == 0 && tempFile.file() ) {
     saveToFile( tempFile.file() );
+    tempFile.sync();
     ok = tempFile.close();
   }
-  
+
   if ( !ok ) {
     addressBook()->error( i18n( "Unable to save file '%1'." ).arg( tempFile.name() ) );
     return false;
@@ -248,7 +250,7 @@ bool ResourceNet::save( Ticket* )
   ok = KIO::NetAccess::upload( tempFile.name(), mUrl, 0 );
   if ( !ok )
     addressBook()->error( i18n( "Unable to upload to '%1'." ).arg( mUrl.prettyURL() ) );
-  
+
   return ok;
 }
 
@@ -264,13 +266,14 @@ bool ResourceNet::asyncSave( Ticket* )
     kdWarning(5700) << "Aborted asyncSave() because we're still asyncLoad()ing!" << endl;
     return false;
   }
-  
+
   bool ok = createLocalTempFile();
   if ( ok ) {
     saveToFile( mTempFile->file() );
+    mTempFile->sync();
     ok = mTempFile->close();
   }
-  
+
   if ( !ok ) {
     emit savingError( this, i18n( "Unable to save file '%1'." ).arg( mTempFile->name() ) );
     deleteLocalTempFile();
@@ -348,7 +351,7 @@ void ResourceNet::downloadFinished( KIO::Job* )
   d->mIsLoading = false;
 
   if ( !hasTempFile() || mTempFile->status() != 0 ) {
-    d->mLastErrorString = i18n( "Download failed in some way!" );
+    d->mLastErrorString = i18n( "Download failed: Unable to create temporary file" );
     QTimer::singleShot( 0, this, SLOT( signalError() ) );
     return;
   }
