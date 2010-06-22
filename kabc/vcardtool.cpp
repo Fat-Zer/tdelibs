@@ -320,6 +320,9 @@ QString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     // UID
     card.addLine( VCardLine( "UID", (*addrIt).uid() ) );
 
+    // UID
+    card.addLine( VCardLine( "URI", (*addrIt).uri() ) );
+
     // URL
     card.addLine( VCardLine( "URL", (*addrIt).url().url() ) );
 
@@ -579,6 +582,10 @@ Addressee::List VCardTool::parseVCards( const QString& vcard )
         // UID
         else if ( identifier == "uid" )
           addr.setUid( (*lineIt).value().asString() );
+
+        // URI
+        else if ( identifier == "uri" )
+          addr.setUri( (*lineIt).value().asString() );
 
         // URL
         else if ( identifier == "url" )

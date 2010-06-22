@@ -110,6 +110,19 @@ class KABC_EXPORT Addressee
      */
     static QString uidLabel();
 
+    /**
+      Set unique resource identifier.
+     */
+    void setUri( const QString &uid );
+    /**
+      Return unique resource identifier.
+     */
+    QString uri() const;
+    /**
+      Return translated label for uri field.
+     */
+    static QString uriLabel();
+
     --DECLARATIONS--
     /**
       Set name fields by parsing the given string and trying to associate the

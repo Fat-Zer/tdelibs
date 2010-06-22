@@ -227,54 +227,64 @@ QString VCardParser::createVCards( const VCard::List& list )
       // iterate over the lines
       for ( lineIt = lines.constBegin(); lineIt != lines.constEnd(); ++lineIt ) {
         if ( !(*lineIt).value().asString().isEmpty() ) {
-          if ( (*lineIt).hasGroup() )
-            textLine = (*lineIt).group() + "." + (*lineIt).identifier();
-          else
-            textLine = (*lineIt).identifier();
+          if ((*lineIt).identifier() != QString("URI")) {
+            if ( (*lineIt).hasGroup() )
+              textLine = (*lineIt).group() + "." + (*lineIt).identifier();
+            else
+              textLine = (*lineIt).identifier();
 
-          params = (*lineIt).parameterList();
-          hasEncoding = false;
-          if ( params.count() > 0 ) { // we have parameters
-            for ( paramIt = params.begin(); paramIt != params.end(); ++paramIt ) {
-              if ( (*paramIt) == "encoding" ) {
-                hasEncoding = true;
-                encodingType = (*lineIt).parameter( "encoding" ).lower();
-              }
+            params = (*lineIt).parameterList();
+            hasEncoding = false;
+            if ( params.count() > 0 ) { // we have parameters
+              for ( paramIt = params.begin(); paramIt != params.end(); ++paramIt ) {
+                if ( (*paramIt) == "encoding" ) {
+                  hasEncoding = true;
+                  encodingType = (*lineIt).parameter( "encoding" ).lower();
+                }
 
-              values = (*lineIt).parameters( *paramIt );
-              for ( valueIt = values.constBegin(); valueIt != values.constEnd(); ++valueIt ) {
-                textLine.append( ";" + (*paramIt).upper() );
-                if ( !(*valueIt).isEmpty() )
-                  textLine.append( "=" + (*valueIt) );
+                values = (*lineIt).parameters( *paramIt );
+                for ( valueIt = values.constBegin(); valueIt != values.constEnd(); ++valueIt ) {
+                  textLine.append( ";" + (*paramIt).upper() );
+                  if ( !(*valueIt).isEmpty() )
+                    textLine.append( "=" + (*valueIt) );
+                }
               }
             }
+
+            if ( hasEncoding ) { // have to encode the data
+              QByteArray input, output;
+              if ( encodingType == "b" ) {
+                input = (*lineIt).value().toByteArray();
+                KCodecs::base64Encode( input, output );
+              } else if ( encodingType == "quoted-printable" ) {
+                input = (*lineIt).value().toString().utf8();
+                input.resize( input.size() - 1 ); // strip \0
+                KCodecs::quotedPrintableEncode( input, output, false );
+              }
+
+              QString value( output );
+              addEscapes( value );
+              textLine.append( ":" + value );
+            } else {
+              QString value( (*lineIt).value().asString() );
+              addEscapes( value );
+              textLine.append( ":" + value );
+            }
+
+            if ( textLine.length() > FOLD_WIDTH ) { // we have to fold the line
+              for ( uint i = 0; i <= ( textLine.length() / FOLD_WIDTH ); ++i )
+                text.append( ( i == 0 ? "" : " " ) + textLine.mid( i * FOLD_WIDTH, FOLD_WIDTH ) + "\r\n" );
+            } else
+              text.append( textLine + "\r\n" );
           }
-
-          if ( hasEncoding ) { // have to encode the data
-            QByteArray input, output;
-            if ( encodingType == "b" ) {
-              input = (*lineIt).value().toByteArray();
-              KCodecs::base64Encode( input, output );
-            } else if ( encodingType == "quoted-printable" ) {
-              input = (*lineIt).value().toString().utf8();
-              input.resize( input.size() - 1 ); // strip \0
-              KCodecs::quotedPrintableEncode( input, output, false );
-            }
-
-            QString value( output );
-            addEscapes( value );
-            textLine.append( ":" + value );
-          } else {
+          else {
+            // URIs can be full of weird symbols, etc. so bypass all checks
+            textLine = (*lineIt).identifier();
             QString value( (*lineIt).value().asString() );
             addEscapes( value );
             textLine.append( ":" + value );
-          }
-
-          if ( textLine.length() > FOLD_WIDTH ) { // we have to fold the line
-            for ( uint i = 0; i <= ( textLine.length() / FOLD_WIDTH ); ++i )
-              text.append( ( i == 0 ? "" : " " ) + textLine.mid( i * FOLD_WIDTH, FOLD_WIDTH ) + "\r\n" );
-          } else
             text.append( textLine + "\r\n" );
+          }
         }
       }
     }

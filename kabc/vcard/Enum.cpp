@@ -2,7 +2,7 @@
 	libvcard - vCard parsing library for vCard version 3.0
 
 	Copyright (C) 1998 Rik Hemsley rik@kde.org
-	
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to
   deal in the Software without restriction, including without limitation the
@@ -29,6 +29,8 @@
 using namespace VCARD;
 
 // There are 31 possible types, not including extensions.
+// URI is a custom field designed to store the upstream URI for each contact
+// in order to handle certain limited CardDAV systems such as Zimbra
 	const QCString
 VCARD::paramNames [] =
 {
@@ -62,7 +64,8 @@ VCARD::paramNames [] =
 	"URL",
 	"VERSION",
 	"CLASS",
-	"KEY"
+	"KEY",
+	"URI"
 };
 
 	const ParamType
@@ -99,6 +102,7 @@ VCARD::paramTypesTable[] = {
 	ParamNone,		// CLASS
 	ParamTextBin,		// KEY
 	ParamTextNS		// X
+	ParamNone,		// URI
 };
 
 	ParamType
@@ -107,31 +111,31 @@ VCARD::EntityTypeToParamType(EntityType e)
 	ParamType t(ParamUnknown);
 
 	switch (e) {
-	
-	//---------------------------------------------------------------//	
+
+	//---------------------------------------------------------------//
 		case EntityAgent:		t = ParamAgent;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntitySound:		t = ParamSound;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntitySource:		t = ParamSource;	break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityTelephone:		t = ParamTel;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityEmail:		t = ParamEmail;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityKey:			t = ParamTextBin;	break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityExtension:		t = ParamTextNS;	break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityAddress:
 		case EntityLabel:		t = ParamAddrText;	break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityBirthday:
 		case EntityRevision:		t = ParamDate;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityPhoto:
 		case EntityLogo:		t = ParamImage;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityOrganisation:
 		case EntityTitle:
 		case EntityRole:
@@ -142,7 +146,7 @@ VCARD::EntityTypeToParamType(EntityType e)
 		case EntityNickname:
 		case EntityCategories:
 		case EntityNote:		t = ParamText;		break;
-	//---------------------------------------------------------------//		
+	//---------------------------------------------------------------//
 		case EntityProductID:
 		case EntityTimeZone:
 		case EntityUID:
@@ -152,11 +156,12 @@ VCARD::EntityTypeToParamType(EntityType e)
 		case EntityName:
 		case EntityVersion:
 		case EntityProfile:
+		case EntityURI:
 		default:			t = ParamNone;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 
 	}
-	
+
 	return t;
 }
 
@@ -166,40 +171,40 @@ VCARD::EntityTypeToValueType(EntityType e)
 	ValueType t(ValueUnknown);
 
 	switch (e) {
-	
-	//---------------------------------------------------------------//	
+
+	//---------------------------------------------------------------//
 		case EntitySound:		t = ValueSound;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityAgent:		t = ValueAgent;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityAddress:		t = ValueAddress;	break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityTelephone:		t = ValueTel;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityKey:			t = ValueTextBin;	break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityOrganisation:	t = ValueOrg;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityN:			t = ValueN;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityTimeZone:		t = ValueUTC;		break;
-	//---------------------------------------------------------------//		
+	//---------------------------------------------------------------//
 		case EntityClass:		t = ValueClass;		break;
-	//---------------------------------------------------------------//		
+	//---------------------------------------------------------------//
 		case EntityGeo:			t = ValueGeo;		break;
-	//---------------------------------------------------------------//		
+	//---------------------------------------------------------------//
 		case EntitySource:
 		case EntityURL:			t = ValueURI;		break;
-	//---------------------------------------------------------------//		
+	//---------------------------------------------------------------//
 		case EntityPhoto:
 		case EntityLogo:		t = ValueImage;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityBirthday:
 		case EntityRevision:		t = ValueDate;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityCategories:
 		case EntityNickname:		t = ValueTextList;	break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 		case EntityLabel:
 		case EntityExtension:
 		case EntityEmail:
@@ -214,11 +219,12 @@ VCARD::EntityTypeToValueType(EntityType e)
 		case EntityProfile:
 		case EntityUID:
 		case EntityNote:
+		case EntityURI:
 		default:			t = ValueText;		break;
-	//---------------------------------------------------------------//	
+	//---------------------------------------------------------------//
 
 	}
-	
+
 	return t;
 }
 
@@ -233,9 +239,9 @@ VCARD::EntityTypeToParamName(EntityType e)
 VCARD::EntityNameToEntityType(const QCString & s)
 {
 	if (s.isEmpty()) return EntityUnknown;
-	
+
 	EntityType t(EntityUnknown);
-	
+
 	switch (s[0]) {
 
 		case 'A':
@@ -288,7 +294,7 @@ VCARD::EntityNameToEntityType(const QCString & s)
 			if (s == "MAILER")
 				t = EntityMailer;
 			break;
-			
+
 		case 'N':
 			if (s == "N")
 				t = EntityN;
@@ -313,14 +319,14 @@ VCARD::EntityNameToEntityType(const QCString & s)
 			else if (s == "PROFILE")
 				t = EntityProfile;
 			break;
-		
+
 		case 'R':
 			if (s == "REV")
 				t = EntityRevision;
 			else if (s == "ROLE")
 				t = EntityRole;
 			break;
-			
+
 		case 'S':
 			if (s == "SORT-STRING")
 				t = EntitySortString;
@@ -344,6 +350,8 @@ VCARD::EntityNameToEntityType(const QCString & s)
 				t = EntityUID;
 			else if (s == "URL")
 				t = EntityURL;
+			else if (s == "URI")
+				t = EntityURI;
 		case 'V':
 			if (s == "VERSION")
 				t = EntityVersion;
@@ -353,12 +361,12 @@ VCARD::EntityNameToEntityType(const QCString & s)
 			if (s.left(2) == "X-")
 				t = EntityExtension;
 			break;
-			
+
 		default:
-			
+
 			t = EntityUnknown;
 	}
-	
+
 	return t;
 }
 
@@ -389,7 +397,7 @@ VCARD::EntityNameToEntityType(const QCString & s)
  *
  */
 
-static char B64[] = 
+static char B64[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 // the mime base64 disctionary used for decoding

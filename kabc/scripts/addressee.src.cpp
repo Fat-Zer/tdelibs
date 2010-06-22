@@ -47,6 +47,7 @@ KABC::SortMode *Addressee::mSortMode = 0;
 struct Addressee::AddresseeData : public KShared
 {
   QString uid;
+  QString uri;
   --VARIABLES--
 
   PhoneNumber::List phoneNumbers;
@@ -178,6 +179,24 @@ QString Addressee::uid() const
 QString Addressee::uidLabel()
 {
   return i18n("Unique Identifier");
+}
+
+void Addressee::setUri( const QString &id )
+{
+  if ( id == mData->uri ) return;
+  detach();
+  mData->empty = false;
+  mData->uri = id;
+}
+
+QString Addressee::uri() const
+{
+  return mData->uri;
+}
+
+QString Addressee::uriLabel()
+{
+  return i18n("Unique Resource Identifier");
 }
 
 --DEFINITIONS--

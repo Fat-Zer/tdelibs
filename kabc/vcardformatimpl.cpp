@@ -137,6 +137,10 @@ bool VCardFormatImpl::loadAddressee( Addressee& addressee, VCARD::VCard &v )
         addressee.setUid( readTextValue( cl ) );
         break;
 
+      case EntityURI:
+        addressee.setUri( readTextValue( cl ) );
+        break;
+
       case EntityEmail:
         addressee.insertEmail( readTextValue( cl ) );
         break;
@@ -278,6 +282,7 @@ void VCardFormatImpl::saveAddressee( const Addressee &addressee, VCARD::VCard *v
 
   addTextValue( v, EntityName, addressee.name() );
   addTextValue( v, EntityUID, addressee.uid() );
+  addTextValue( v, EntityURI, addressee.uri() );
   addTextValue( v, EntityFullName, addressee.formattedName() );
 
   QStringList emails = addressee.emails();
