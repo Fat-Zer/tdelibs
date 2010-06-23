@@ -101,8 +101,8 @@ VCARD::paramTypesTable[] = {
 	ParamNone,		// VERSION
 	ParamNone,		// CLASS
 	ParamTextBin,		// KEY
-	ParamTextNS		// X
-	ParamNone,		// URI
+	ParamTextNS,		// X
+	ParamNone		// URI
 };
 
 	ParamType
