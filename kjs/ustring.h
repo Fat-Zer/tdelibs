@@ -24,6 +24,7 @@
 #ifndef _KJS_USTRING_H_
 #define _KJS_USTRING_H_
 
+#include <qstring.h>
 #include "global.h"
 
 /**

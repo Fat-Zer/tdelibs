@@ -562,6 +562,20 @@ RandRDisplay::RandRDisplay()
 		return;
 	}
 
+	// Sometimes the extension is available but does not return any screens (!)
+	// Check for that case
+	Display *randr_display = XOpenDisplay(NULL);
+	int screen_num;
+	Window root_window;
+
+	screen_num = DefaultScreen (randr_display);
+	root_window = RootWindow (randr_display, screen_num);
+	if (XRRGetScreenResources (randr_display, root_window) == NULL) {
+		m_errorCode = i18n("No screens detected");
+		m_valid = false;
+		return;
+	}
+
 	int major_version, minor_version;
 	XRRQueryVersion(qt_xdisplay(), &major_version, &minor_version);
 

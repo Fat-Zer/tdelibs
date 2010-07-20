@@ -21,11 +21,10 @@
 #ifndef _KDIALOG_H_
 #define _KDIALOG_H_
 
-class QLayoutItem;
-
 #include <qdialog.h>
-
 #include <kdelibs_export.h>
+
+class QLayoutItem;
 
 /**
  * Dialog with extended non-modal support and methods for %KDE standard

@@ -90,6 +90,9 @@ QString KRandrSimpleAPI::applyIccFile(QString screenName, QString fileName) {
 			screenNumber = -1;
 			randr_display = XOpenDisplay(NULL);
 			randr_screen_info = read_screen_info(randr_display);
+			if (randr_screen_info == NULL) {
+				return "";
+			}
 			j=0;
 			for (i = 0; i < randr_screen_info->n_output; i++) {
 				output_info = randr_screen_info->outputs[i]->info;
@@ -151,6 +154,9 @@ QString KRandrSimpleAPI::applyIccFile(QString screenName, QString fileName) {
 			screenNumber = -1;
 			randr_display = XOpenDisplay(NULL);
 			randr_screen_info = read_screen_info(randr_display);
+			if (randr_screen_info == NULL) {
+				return "";
+			}
 			j=0;
 			for (i = 0; i < randr_screen_info->n_output; i++) {
 				output_info = randr_screen_info->outputs[i]->info;
@@ -216,6 +222,9 @@ QString KRandrSimpleAPI::applyIccConfiguration(QString profileName, QString kde_
 	if (isValid() == true) {
 		randr_display = XOpenDisplay(NULL);
 		randr_screen_info = read_screen_info(randr_display);
+		if (randr_screen_info == NULL) {
+			return "";
+		}
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			output_info = randr_screen_info->outputs[i]->info;
 			errorstr = applyIccFile(output_info->name, getIccFileName(profileName, output_info->name, kde_confdir));

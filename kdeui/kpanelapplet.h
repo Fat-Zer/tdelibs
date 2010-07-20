@@ -24,11 +24,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __kpanelapplet_h__
 #define __kpanelapplet_h__
 
-class KConfig;
-class QPopupMenu;
-
 #include <qframe.h>
 #include <kconfig.h>
+
+class KConfig;
+class QPopupMenu;
 
 /**
  * @short %KDE Panel Applet class

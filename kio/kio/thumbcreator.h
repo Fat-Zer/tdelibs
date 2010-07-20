@@ -20,10 +20,12 @@
 #ifndef _THUMBCREATOR_H_
 #define _THUMBCREATOR_H_
 
+#include <qstring.h>
+
 class QString;
 class QImage;
 /**
- * This is the baseclass for "thumbnail-plugins" in KDE. Using the class 
+ * This is the baseclass for "thumbnail-plugins" in KDE. Using the class
  * KIO::PreviewJob allows you to generate small images (thumbnails)
  * for any kind of file, where a "ThumbCreator" is available. Have a look
  * at kdebase/kioslave/thumbnail/ for existing ThumbCreators.

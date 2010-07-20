@@ -384,6 +384,10 @@ struct ScreenInfo* internal_read_screen_info (Display *display)
 
 	sr = XRRGetScreenResources (display, root_window);
 
+	if (sr == NULL) {
+		return NULL;
+	}
+
 	screen_info = malloc (sizeof (struct ScreenInfo));
 	screen_info->dpy = display;
 	screen_info->window = root_window;

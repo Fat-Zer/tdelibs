@@ -24,13 +24,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __kpanelextension_h__
 #define __kpanelextension_h__
 
+#include <qframe.h>
+#include <kdelibs_export.h>
+
 class QPopupMenu;
 class KConfig;
 class KPanelExtensionPrivate;
-
-#include <qframe.h>
-
-#include <kdelibs_export.h>
 
 /**
  * @short %KDE Panel Extension class
