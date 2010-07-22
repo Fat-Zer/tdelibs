@@ -30,12 +30,14 @@
 #include <network/ksocketaddress.h>
 #include <kurl.h>
 #include <unistd.h>
+#ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
 #ifdef AVAHI_API_0_6
 #include <avahi-client/publish.h>
 #endif
 #include <avahi-common/alternative.h>
 #include <avahi-common/strlst.h>
+#endif
 #include "sdevent.h"
 #include "responder.h"
 #include "servicebrowser.h"
@@ -52,15 +54,22 @@ void publish_callback (AvahiEntryGroup*, AvahiEntryGroupState s,  void *context)
 class PublicServicePrivate
 {
 public:
-	PublicServicePrivate() : m_published(false), m_running(false), m_collision(false), m_group(false)
+	PublicServicePrivate() : m_published(false), m_running(false), m_collision(false)
+#ifdef HAVE_DNSSD
+	, m_group(false)
+#endif
 	{}
 	bool m_published;
 	bool m_running;
 	bool m_collision;
+#ifdef HAVE_DNSSD
 	AvahiEntryGroup* m_group;
+#endif
 	void commit()
 	{
+#ifdef HAVE_DNSSD
 	    if (!m_collision) avahi_entry_group_commit(m_group);
+#endif
 	}
 
 };
@@ -70,10 +79,12 @@ PublicService::PublicService(const QString& name, const QString& type, unsigned 
   		: QObject(), ServiceBase(name, type, QString::null, domain, port)
 {
 	d = new PublicServicePrivate;
+#ifdef HAVE_DNSSD
 	if (Responder::self().client()) {
 		d->m_group = avahi_entry_group_new(Responder::self().client(), publish_callback,this);
 		connect(&Responder::self(),SIGNAL(stateChanged(AvahiClientState)),this,SLOT(clientState(AvahiClientState)));
 	}
+#endif
 	if (domain.isNull())
 		if (Configuration::publishType()==Configuration::EnumPublishType::LAN) m_domain="local.";
 		else m_domain=Configuration::publishDomain();
@@ -82,7 +93,9 @@ PublicService::PublicService(const QString& name, const QString& type, unsigned 
 
 PublicService::~PublicService()
 {
+#ifdef HAVE_DNSSD
 	if (d->m_group) avahi_entry_group_free(d->m_group);
+#endif
 	delete d;
 }
 
@@ -98,47 +111,57 @@ void PublicService::tryApply()
 void PublicService::setServiceName(const QString& serviceName)
 {
 	m_serviceName = serviceName;
+#ifdef HAVE_DNSSD
 	if (d->m_running) {
 	    avahi_entry_group_reset(d->m_group);
 	    tryApply();
 	}
+#endif
 }
 
 void PublicService::setDomain(const QString& domain)
 {
 	m_domain = domain;
+#ifdef HAVE_DNSSD
 	if (d->m_running) {
 	    avahi_entry_group_reset(d->m_group);
 	    tryApply();
 	}
+#endif
 }
 
 
 void PublicService::setType(const QString& type)
 {
 	m_type = type;
+#ifdef HAVE_DNSSD
 	if (d->m_running) {
 	    avahi_entry_group_reset(d->m_group);
 	    tryApply();
 	}
+#endif
 }
 
 void PublicService::setPort(unsigned short port)
 {
 	m_port = port;
+#ifdef HAVE_DNSSD
 	if (d->m_running) {
 	    avahi_entry_group_reset(d->m_group);
 	    tryApply();
     	}
+#endif
 }
 
 void PublicService::setTextData(const QMap<QString,QString>& textData)
 {
 	m_textData = textData;
+#ifdef HAVE_DNSSD
 	if (d->m_running) {
 	    avahi_entry_group_reset(d->m_group);
 	    tryApply();
 	}
+#endif
 }
 
 bool PublicService::isPublished() const
@@ -155,11 +178,14 @@ bool PublicService::publish()
 
 void PublicService::stop()
 {
+#ifdef HAVE_DNSSD
     if (d->m_group) avahi_entry_group_reset(d->m_group);
+#endif
     d->m_published = false;
 }
 bool PublicService::fillEntryGroup()
 {
+#ifdef HAVE_DNSSD
     AvahiStringList *s=0;
     QMap<QString,QString>::ConstIterator itEnd = m_textData.end();
     for (QMap<QString,QString>::ConstIterator it = m_textData.begin(); it!=itEnd ; ++it)
@@ -175,11 +201,15 @@ bool PublicService::fillEntryGroup()
 #endif
     avahi_string_list_free(s);
     return res;
+#else
+    return FALSE;
+#endif
 }
 
 void PublicService::clientState(AvahiClientState s)
 {
     if (!d->m_running) return;
+#ifdef HAVE_DNSSD
     switch (s) {
 #ifdef AVAHI_API_0_6
 	case AVAHI_CLIENT_FAILURE:
@@ -201,22 +231,25 @@ void PublicService::clientState(AvahiClientState s)
 		tryApply();
 	    }
     }
+#endif
 }
 
 void PublicService::publishAsync()
 {
 	if (d->m_running) stop();
 
+#ifdef HAVE_DNSSD
 	if (!d->m_group) {
 	    emit published(false);
 	    return;
 	}
-#ifdef HAVE_DNSSD
 	AvahiClientState s=Responder::self().state();
 #endif
 	d->m_running=true;
 	d->m_collision=true; // make it look like server is getting out of collision to force registering
+#ifdef HAVE_DNSSD
 	clientState(s);
+#endif
 }
 
 #ifdef HAVE_DNSSD
@@ -251,6 +284,7 @@ const KURL PublicService::toInvitation(const QString& host)
 
 void PublicService::customEvent(QCustomEvent* event)
 {
+#ifdef HAVE_DNSSD
 	if (event->type()==QEvent::User+SD_PUBLISH) {
 		if (!static_cast<PublishEvent*>(event)->m_ok) {
 		    setServiceName(QString::fromUtf8(avahi_alternative_service_name(m_serviceName.utf8())));
@@ -259,6 +293,7 @@ void PublicService::customEvent(QCustomEvent* event)
 		d->m_published=true;
 		emit published(true);
 	}
+#endif
 }
 
 void PublicService::virtual_hook(int, void*)

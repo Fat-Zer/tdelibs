@@ -48,14 +48,21 @@ void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBr
 class DomainBrowserPrivate
 {
 public:
-	DomainBrowserPrivate(DomainBrowser* owner) : m_browseLAN(false), m_started(false),
-	    m_browser(0), m_owner(owner) {}
+	DomainBrowserPrivate(DomainBrowser* owner) : m_browseLAN(false), m_started(false)
+#ifdef HAVE_DNSSD
+	   , m_browser(0), m_owner(owner)
+#endif
+	{}
+#ifdef HAVE_DNSSD
 	~DomainBrowserPrivate() { if (m_browser) avahi_domain_browser_free(m_browser); }
+#endif
 	QStringList m_domains;
 	virtual void customEvent(QCustomEvent* event);
 	bool m_browseLAN;
 	bool m_started;
+#ifdef HAVE_DNSSD
 	AvahiDomainBrowser* m_browser;
+#endif
 	DomainBrowser* m_owner;
 };
 
@@ -132,10 +139,12 @@ void DomainBrowser::domainListChanged(int message,int)
 	if (message!=KIPCDomainsChanged) return;
 
 	bool was_started = d->m_started;
+#ifdef HAVE_DNSSD
 	if (d->m_browser) {
 	    avahi_domain_browser_free(d->m_browser);  // LAN query
 	    d->m_browser=0;
 	}
+#endif
 	d->m_started = false;
 
 	// remove all domains and resolvers

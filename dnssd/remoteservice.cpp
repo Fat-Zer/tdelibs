@@ -27,10 +27,12 @@
 #include <sys/types.h>
 #endif
 #include <netinet/in.h>
+#ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
 #include <avahi-common/strlst.h>
 #ifdef AVAHI_API_0_6
 #include <avahi-client/lookup.h>
+#endif
 #endif
 #include "remoteservice.h"
 #include "responder.h"
@@ -53,15 +55,21 @@ void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol proto, 
 class RemoteServicePrivate : public Responder
 {
 public:
-	RemoteServicePrivate() :  m_resolved(false), m_running(false), m_resolver(0) {}
+	RemoteServicePrivate() :  m_resolved(false), m_running(false)
+#ifdef HAVE_DNSSD
+	, m_resolver(0)
+#endif
+	{}
 	bool m_resolved;
 	bool m_running;
+#ifdef HAVE_DNSSD
 	AvahiServiceResolver* m_resolver;
 	void stop() {
 	    m_running = false;
 	    if (m_resolver) avahi_service_resolver_free(m_resolver);
 	    m_resolver=0;
 	}
+#endif
 };
 
 RemoteService::RemoteService(const QString& label)
@@ -91,7 +99,9 @@ RemoteService::RemoteService(const KURL& url)
 
 RemoteService::~RemoteService()
 {
+#ifdef HAVE_DNSSD
 	if (d->m_resolver) avahi_service_resolver_free(d->m_resolver);
+#endif
 	delete d;
 }
 
@@ -99,7 +109,9 @@ bool RemoteService::resolve()
 {
 	resolveAsync();
 	while (d->m_running && !d->m_resolved) Responder::self().process();
+#ifdef HAVE_DNSSD
 	d->stop();
+#endif
 	return d->m_resolved;
 }
 
@@ -117,9 +129,9 @@ void RemoteService::resolveAsync()
 	d->m_resolver = avahi_service_resolver_new(Responder::self().client(),AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 	    m_serviceName.utf8(), m_type.ascii(), m_domain.utf8(), AVAHI_PROTO_UNSPEC, resolve_callback, this);
 #endif
-#endif
 	if (d->m_resolver) d->m_running=true;
 	    else  emit resolved(false);
+#endif
 }
 
 bool RemoteService::isResolved() const
@@ -130,7 +142,9 @@ bool RemoteService::isResolved() const
 void RemoteService::customEvent(QCustomEvent* event)
 {
 	if (event->type() == QEvent::User+SD_ERROR) {
+#ifdef HAVE_DNSSD
 		d->stop();
+#endif
 		d->m_resolved=false;
 		emit resolved(false);
 	}
@@ -160,7 +174,9 @@ QDataStream & operator<< (QDataStream & s, const RemoteService & a)
 QDataStream & operator>> (QDataStream & s, RemoteService & a)
 {
 	// stop any possible resolve going on
+#ifdef HAVE_DNSSD
 	a.d->stop();
+#endif
 	Q_INT8 resolved;
 	operator>>(s,(static_cast<ServiceBase&>(a)));
 	s >> resolved;

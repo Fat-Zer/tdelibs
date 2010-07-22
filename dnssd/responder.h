@@ -29,6 +29,7 @@
 #include <avahi-client/client.h>
 #else
 #define DNSServiceRef void*
+#define AvahiClientState void*
 #endif
 
 namespace DNSSD

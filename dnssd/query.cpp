@@ -26,9 +26,11 @@
 #include <qapplication.h>
 #include <qtimer.h>
 
+#ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
 #ifdef AVAHI_API_0_6
 #include <avahi-client/lookup.h>
+#endif
 #endif
 
 #define TIMEOUT_LAN 200
@@ -78,12 +80,14 @@ Query::Query(const QString& type, const QString& domain)
 
 Query::~Query()
 {
+#ifdef HAVE_DNSSD
 	if (d->m_browser) {
 	    switch (d->m_browserType) {
 		case Services: avahi_service_browser_free((AvahiServiceBrowser*)d->m_browser); break;
 		case Types: avahi_service_type_browser_free((AvahiServiceTypeBrowser*)d->m_browser); break;
 	    }
 	}
+#endif
 	delete d;
 }
 

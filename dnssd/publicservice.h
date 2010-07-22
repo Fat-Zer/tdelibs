@@ -23,7 +23,11 @@
 
 #include <qobject.h>
 #include <dnssd/servicebase.h>
+#ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
+#else
+#define AvahiClientState void*
+#endif
 
 class KURL;
 namespace DNSSD
