@@ -38,6 +38,7 @@
 
 namespace DNSSD
 {
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol proto, AvahiResolverEvent e,
     const char* name, const char* type, const char* domain, const char* hostname, const AvahiAddress* a,
@@ -46,6 +47,7 @@ void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol proto, 
 void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol proto, AvahiResolverEvent e,
     const char* name, const char* type, const char* domain, const char* hostname, const AvahiAddress* a,
     uint16_t port, AvahiStringList* txt, void* context);
+#endif
 #endif
 
 class RemoteServicePrivate : public Responder
@@ -106,6 +108,7 @@ void RemoteService::resolveAsync()
 	if (d->m_running) return;
 	d->m_resolved = false;
 	// FIXME: first protocol should be set?
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 	d->m_resolver = avahi_service_resolver_new(Responder::self().client(),AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 	    m_serviceName.utf8(), m_type.ascii(), domainToDNS(m_domain), AVAHI_PROTO_UNSPEC, AVAHI_LOOKUP_NO_ADDRESS,
@@ -113,6 +116,7 @@ void RemoteService::resolveAsync()
 #else
 	d->m_resolver = avahi_service_resolver_new(Responder::self().client(),AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 	    m_serviceName.utf8(), m_type.ascii(), m_domain.utf8(), AVAHI_PROTO_UNSPEC, resolve_callback, this);
+#endif
 #endif
 	if (d->m_resolver) d->m_running=true;
 	    else  emit resolved(false);
@@ -160,10 +164,11 @@ QDataStream & operator>> (QDataStream & s, RemoteService & a)
 	Q_INT8 resolved;
 	operator>>(s,(static_cast<ServiceBase&>(a)));
 	s >> resolved;
-	a.d->m_resolved = (resolved == 1);	
+	a.d->m_resolved = (resolved == 1);
 	return s;
 }
 
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol, AvahiResolverEvent e,
     const char*, const char*, const char*, const char* hostname, const AvahiAddress*,
@@ -177,7 +182,7 @@ void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol, AvahiR
 	QObject *obj = reinterpret_cast<QObject*>(context);
 	if (e != AVAHI_RESOLVER_FOUND) {
 		ErrorEvent err;
-		QApplication::sendEvent(obj, &err);	
+		QApplication::sendEvent(obj, &err);
 		return;
 	}
 	QMap<QString,QString> map;
@@ -191,6 +196,7 @@ void resolve_callback(AvahiServiceResolver*, AvahiIfIndex, AvahiProtocol, AvahiR
 	ResolveEvent rev(DNSToDomain(hostname),port,map);
 	QApplication::sendEvent(obj, &rev);
 }
+#endif
 
 
 }

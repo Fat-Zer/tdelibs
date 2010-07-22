@@ -34,6 +34,7 @@
 namespace DNSSD
 {
 
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event, const char* replyDomain,
      AvahiLookupResultFlags, void* context);
@@ -41,12 +42,13 @@ void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBr
 void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event, const char* replyDomain,
      void* context);
 #endif
+#endif
 
 
-class DomainBrowserPrivate 
+class DomainBrowserPrivate
 {
 public:
-	DomainBrowserPrivate(DomainBrowser* owner) : m_browseLAN(false), m_started(false), 
+	DomainBrowserPrivate(DomainBrowser* owner) : m_browseLAN(false), m_started(false),
 	    m_browser(0), m_owner(owner) {}
 	~DomainBrowserPrivate() { if (m_browser) avahi_domain_browser_free(m_browser); }
 	QStringList m_domains;
@@ -55,7 +57,7 @@ public:
 	bool m_started;
 	AvahiDomainBrowser* m_browser;
 	DomainBrowser* m_owner;
-};		
+};
 
 void DomainBrowserPrivate::customEvent(QCustomEvent* event)
 {
@@ -66,7 +68,7 @@ void DomainBrowserPrivate::customEvent(QCustomEvent* event)
 	}
 }
 
-	
+
 DomainBrowser::DomainBrowser(QObject *parent) : QObject(parent)
 {
 	d = new DomainBrowserPrivate(this);
@@ -100,13 +102,15 @@ void DomainBrowser::startBrowse()
 	if (ServiceBrowser::isAvailable()!=ServiceBrowser::Working) return;
  	QStringList::const_iterator itEnd = d->m_domains.end();
 	for (QStringList::const_iterator it=d->m_domains.begin(); it!=itEnd; ++it ) emit domainAdded(*it);
-	if (d->m_browseLAN) 
+#ifdef HAVE_DNSSD
+	if (d->m_browseLAN)
 #ifdef AVAHI_API_0_6
 	    d->m_browser = avahi_domain_browser_new(Responder::self().client(), AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 		"local.", AVAHI_DOMAIN_BROWSER_BROWSE, (AvahiLookupFlags)0, domains_callback, this);
 #else
 	    d->m_browser = avahi_domain_browser_new(Responder::self().client(), AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 		"local.", AVAHI_DOMAIN_BROWSER_BROWSE, domains_callback, this);
+#endif
 #endif
 }
 
@@ -128,7 +132,7 @@ void DomainBrowser::domainListChanged(int message,int)
 	if (message!=KIPCDomainsChanged) return;
 
 	bool was_started = d->m_started;
-	if (d->m_browser) { 
+	if (d->m_browser) {
 	    avahi_domain_browser_free(d->m_browser);  // LAN query
 	    d->m_browser=0;
 	}
@@ -163,6 +167,7 @@ bool DomainBrowser::isRunning() const
 void DomainBrowser::virtual_hook(int, void*)
 {}
 
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event, const char* replyDomain,
      AvahiLookupResultFlags,void* context)
@@ -173,11 +178,11 @@ void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBr
 {
 	QObject *obj = reinterpret_cast<QObject*>(context);
 	AddRemoveEvent* arev=new AddRemoveEvent((event==AVAHI_BROWSER_NEW) ? AddRemoveEvent::Add :
-			AddRemoveEvent::Remove, QString::null, QString::null, 
+			AddRemoveEvent::Remove, QString::null, QString::null,
 			DNSToDomain(replyDomain));
 		QApplication::postEvent(obj, arev);
 }
-
+#endif
 
 }
 #include "domainbrowser.moc"

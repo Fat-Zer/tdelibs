@@ -33,16 +33,19 @@ namespace DNSSD
 static KStaticDeleter<Responder> responder_sd;
 Responder* Responder::m_self = 0;
 
-void client_callback(AvahiClient *, AvahiClientState s, void* u) 
+#ifdef HAVE_DNSSD
+void client_callback(AvahiClient *, AvahiClientState s, void* u)
 {
-    Responder *r = reinterpret_cast<Responder*>(u);    
+    Responder *r = reinterpret_cast<Responder*>(u);
     emit (r->stateChanged(s));
 }
+#endif
 
 
 Responder::Responder()
 {
     int error;
+#ifdef HAVE_DNSSD
     const AvahiPoll* poll = avahi_qt_poll_get();
 #ifdef AVAHI_API_0_6
     m_client = avahi_client_new(poll, AVAHI_CLIENT_IGNORE_USER_CONFIG,client_callback, this,  &error);
@@ -50,11 +53,14 @@ Responder::Responder()
     m_client = avahi_client_new(poll, client_callback, this,  &error);
 #endif
     if (!m_client) kdWarning() << "Failed to create avahi client" << endl;
+#endif
 }
- 
+
 Responder::~Responder()
 {
+#ifdef HAVE_DNSSD
     if (m_client) avahi_client_free(m_client);
+#endif
 }
 
 Responder& Responder::self()
@@ -68,6 +74,7 @@ void Responder::process()
     qApp->eventLoop()->processEvents(QEventLoop::ExcludeUserInput);
 }
 
+#ifdef HAVE_DNSSD
 AvahiClientState Responder::state() const
 {
 #ifdef AVAHI_API_0_6
@@ -76,6 +83,7 @@ AvahiClientState Responder::state() const
 	return (m_client) ? (avahi_client_get_state(m_client)) : AVAHI_CLIENT_DISCONNECTED;
 #endif
 }
+#endif
 
 bool domainIsLocal(const QString& domain)
 {

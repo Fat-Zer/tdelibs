@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "query.h" 
+#include "query.h"
 #include "responder.h"
 #include "remoteservice.h"
 #include "sdevent.h"
@@ -35,6 +35,7 @@
 
 namespace DNSSD
 {
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 
 void services_callback(AvahiServiceBrowser*, AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event, const char* name,
@@ -49,10 +50,11 @@ void types_callback(AvahiServiceTypeBrowser*, AvahiIfIndex, AvahiProtocol, Avahi
 void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event, const char* replyDomain,
      void* context);
 #endif
+#endif
 
 enum BrowserType { Types, Services };
 
-class QueryPrivate 
+class QueryPrivate
 {
 public:
 	QueryPrivate(const QString& type, const QString& domain) : m_finished(false), m_browser(0),
@@ -81,7 +83,7 @@ Query::~Query()
 		case Services: avahi_service_browser_free((AvahiServiceBrowser*)d->m_browser); break;
 		case Types: avahi_service_type_browser_free((AvahiServiceTypeBrowser*)d->m_browser); break;
 	    }
-	}		    
+	}
 	delete d;
 }
 
@@ -106,6 +108,7 @@ void Query::startQuery()
 	d->m_finished = false;
 	if (d->m_type=="_services._dns-sd._udp") {
 	    d->m_browserType = Types;
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 	    d->m_browser = avahi_service_type_browser_new(Responder::self().client(), AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 		domainToDNS(d->m_domain), (AvahiLookupFlags)0, types_callback, this);
@@ -113,14 +116,17 @@ void Query::startQuery()
 	    d->m_browser = avahi_service_type_browser_new(Responder::self().client(), AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 		d->m_domain.utf8(), types_callback, this);
 #endif
+#endif
 	} else {
 	    d->m_browserType = Services;
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 	    d->m_browser = avahi_service_browser_new(Responder::self().client(), AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 	    d->m_type.ascii(),domainToDNS(d->m_domain),  (AvahiLookupFlags)0, services_callback,this);
 #else
 	    d->m_browser = avahi_service_browser_new(Responder::self().client(), AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
 	    d->m_type.ascii(),d->m_domain.utf8(),services_callback,this);
+#endif
 #endif
 	}
 	if (d->m_browser) {
@@ -152,17 +158,18 @@ void Query::timeout()
 	emit finished();
 }
 
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
-void services_callback (AvahiServiceBrowser*, AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event, 
+void services_callback (AvahiServiceBrowser*, AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event,
     const char* serviceName, const char* regtype, const char* replyDomain, AvahiLookupResultFlags, void* context)
 #else
-void services_callback (AvahiServiceBrowser*, AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event, 
+void services_callback (AvahiServiceBrowser*, AvahiIfIndex, AvahiProtocol, AvahiBrowserEvent event,
     const char* serviceName, const char* regtype, const char* replyDomain, void* context)
 #endif
 {
 	QObject *obj = reinterpret_cast<QObject*>(context);
 	AddRemoveEvent* arev = new AddRemoveEvent((event==AVAHI_BROWSER_NEW) ? AddRemoveEvent::Add :
-			AddRemoveEvent::Remove, QString::fromUtf8(serviceName), regtype, 
+			AddRemoveEvent::Remove, QString::fromUtf8(serviceName), regtype,
 			DNSToDomain(replyDomain));
 		QApplication::postEvent(obj, arev);
 }
@@ -177,10 +184,11 @@ void types_callback(AvahiServiceTypeBrowser*, AvahiIfIndex, AvahiProtocol, Avahi
 {
 	QObject *obj = reinterpret_cast<QObject*>(context);
 	AddRemoveEvent* arev = new AddRemoveEvent((event==AVAHI_BROWSER_NEW) ? AddRemoveEvent::Add :
-			AddRemoveEvent::Remove, QString::null, regtype, 
+			AddRemoveEvent::Remove, QString::null, regtype,
 			DNSToDomain(replyDomain));
 		QApplication::postEvent(obj, arev);
 }
+#endif
 
 }
 #include "query.moc"

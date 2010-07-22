@@ -26,7 +26,9 @@
 #include "responder.h"
 #include "query.h"
 #include "servicebrowser.h"
+#ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
+#endif
 #include <config.h>
 
 namespace DNSSD
@@ -34,10 +36,10 @@ namespace DNSSD
 
 const QString ServiceBrowser::AllServices = "_services._dns-sd._udp";
 
-class ServiceBrowserPrivate 
+class ServiceBrowserPrivate
 {
-public:	
-	ServiceBrowserPrivate() : m_running(false) 
+public:
+	ServiceBrowserPrivate() : m_running(false)
 	{}
 	QValueList<RemoteService::Ptr> m_services;
 	QValueList<RemoteService::Ptr> m_duringResolve;
@@ -82,12 +84,16 @@ ServiceBrowser::ServiceBrowser(const QString& type,const QString& domain,int fla
 
 const ServiceBrowser::State ServiceBrowser::isAvailable()
 {
+#ifdef HAVE_DNSSD
 	AvahiClientState s = Responder::self().state();
 #ifdef AVAHI_API_0_6
 	return (s==AVAHI_CLIENT_FAILURE) ? Stopped : Working;
 #else
 	return (s==AVAHI_CLIENT_S_INVALID || s==AVAHI_CLIENT_DISCONNECTED) ? Stopped : Working;
-#endif 
+#endif
+#else
+	return Unsupported;
+#endif
 }
 ServiceBrowser::~ ServiceBrowser()
 {
@@ -158,7 +164,7 @@ void ServiceBrowser::removeDomain(const QString& domain)
 {
 	while (d->resolvers[domain]) d->resolvers.remove(domain);
 	QValueList<RemoteService::Ptr>::Iterator it = d->m_services.begin();
-	while (it!=d->m_services.end()) 
+	while (it!=d->m_services.end())
 		// use section to skip possible trailing dot
 		if ((*it)->domain().section('.',0) == domain.section('.',0)) {
 			emit serviceRemoved(*it);
@@ -209,7 +215,7 @@ void ServiceBrowser::virtual_hook(int, void*)
 QValueList<RemoteService::Ptr>::Iterator ServiceBrowser::findDuplicate(RemoteService::Ptr src)
 {
 	QValueList<RemoteService::Ptr>::Iterator itEnd = d->m_services.end();
-	for (QValueList<RemoteService::Ptr>::Iterator it = d->m_services.begin(); it!=itEnd; ++it) 
+	for (QValueList<RemoteService::Ptr>::Iterator it = d->m_services.begin(); it!=itEnd; ++it)
 		if ((src->type()==(*it)->type()) && (src->serviceName()==(*it)->serviceName()) &&
 				   (src->domain() == (*it)->domain())) return it;
 	return itEnd;

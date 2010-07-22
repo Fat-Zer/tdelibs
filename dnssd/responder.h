@@ -25,13 +25,18 @@
 #include <qsocketnotifier.h>
 #include <qsignal.h>
 #include <config.h>
+#ifdef HAVE_DNSSD
 #include <avahi-client/client.h>
+#else
+#define DNSServiceRef void*
+#endif
+
 namespace DNSSD
 {
 
 /**
 This class should not be used directly.
- 
+
 @author Jakub Stachowski
 @short Internal class wrapping avahi client
  */
@@ -45,22 +50,28 @@ public:
 	~Responder();
 
 	static Responder& self();
+#ifdef HAVE_DNSSD
 	AvahiClientState state() const;
 	AvahiClient* client() const { return m_client; }
+#endif
 	void process();
 signals:
 	void stateChanged(AvahiClientState);
 private:
+#ifdef HAVE_DNSSD
 	AvahiClient* m_client;
+#endif
 	static Responder* m_self;
+#ifdef HAVE_DNSSD
 	friend void client_callback(AvahiClient*, AvahiClientState, void*);
+#endif
 
 };
 
 /* Utils functions */
 
 bool domainIsLocal(const QString& domain);
-// Encodes domain name using utf8() or IDN 
+// Encodes domain name using utf8() or IDN
 QCString domainToDNS(const QString &domain);
 QString DNSToDomain(const char* domain);
 
