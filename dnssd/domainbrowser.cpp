@@ -27,8 +27,10 @@
 #include "query.h"
 #include "servicebrowser.h"
 #include <kapplication.h>
+#ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 #include <avahi-client/lookup.h>
+#endif
 #endif
 
 namespace DNSSD
@@ -48,11 +50,11 @@ void domains_callback(AvahiDomainBrowser*,  AvahiIfIndex, AvahiProtocol, AvahiBr
 class DomainBrowserPrivate
 {
 public:
-	DomainBrowserPrivate(DomainBrowser* owner) : m_browseLAN(false), m_started(false)
 #ifdef HAVE_DNSSD
-	   , m_browser(0), m_owner(owner)
+	DomainBrowserPrivate(DomainBrowser* owner) : m_browseLAN(false), m_started(false), m_browser(0), m_owner(owner) {}
+#else
+	DomainBrowserPrivate(DomainBrowser* owner) : m_browseLAN(false), m_started(false) {}
 #endif
-	{}
 #ifdef HAVE_DNSSD
 	~DomainBrowserPrivate() { if (m_browser) avahi_domain_browser_free(m_browser); }
 #endif
